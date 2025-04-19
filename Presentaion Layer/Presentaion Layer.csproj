@@ -24,4 +24,17 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\People\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Domain Layer">
+      <HintPath>..\Domain Layer\bin\Debug\net8.0\Domain Layer.dll</HintPath>
+    </Reference>
+    <Reference Include="Service Layer">
+      <HintPath>..\Service Layer\bin\Debug\net8.0\Service Layer.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
