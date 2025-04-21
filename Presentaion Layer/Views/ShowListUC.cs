@@ -1,4 +1,5 @@
-﻿using Presentaion_Layer.Views;
+﻿using Presentaion_Layer.Common_For_Coloring___Themes;
+using Presentaion_Layer.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace Presentaion_Layer
    
         public Image? ImageForAddBtn { get => AddBtn.Image; 
             set => AddBtn.Image = value; }
-        public IEnumerable<string>? SearchBy
+        public IList<string>? SearchBy
         {
-            get => SearchByComboBox.DataSource as IEnumerable<string> ?? new List<string>();
+            get => SearchByComboBox.DataSource as List<string> ?? new List<string>();
             set
             {
                 if (value != null && ! value.Any() ) 
@@ -32,11 +33,19 @@ namespace Presentaion_Layer
                 SearchByComboBox.DataSource = value;
             }
         }
+        public string ListName { get => ListNameLabel.Text; set => ListNameLabel.Text = value; }
+        public string SearchByTxt { get => SearchTextBox.Text; set => SearchTextBox.Text = value; }
+
+
 
 
         public ShowListUC()
         {
            InitializeComponent();
+            DataGridView.DefaultCellStyle.BackColor=Themes.DarkMode().BackgroundColor;
+            DataGridView.DefaultCellStyle.ForeColor = Themes.DarkMode().FontColor;
+        //    DataGridView. = Themes.DarkMode().AccentColor;
+
         }
 
 

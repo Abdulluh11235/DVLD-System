@@ -26,6 +26,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Country
             string query = "SELECT * FROM Countries WHERE CountryID=@CountryID";
             using SqlConnection conn = new SqlConnection(_connectionString);
             using SqlCommand cmd = new SqlCommand(query, conn);
+            cmd.Parameters.AddWithValue("@CountryID", id);
             try
             {
                 conn.Open();

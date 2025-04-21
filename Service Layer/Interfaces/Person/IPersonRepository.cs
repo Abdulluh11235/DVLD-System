@@ -12,6 +12,10 @@ namespace Service_Layer.Interfaces.Person
         int? AddPerson(IPersonModel person);
         bool DeletePerson(int id);
         IEnumerable<IPersonModel> GetAllPeople();
+        IEnumerable<IPersonModel> GetByFirstName(string val);
+        IEnumerable<IPersonModel> GetByLastName(string vla);
+        IEnumerable<IPersonModel> GetByNationalNo(string vla);
+
         IPersonModel? GetPersonById(int id);
         bool UpdatePerson(IPersonModel person);
     }

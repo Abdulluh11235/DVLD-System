@@ -12,15 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Common Components">
-      <HintPath>..\Common Components\bin\Debug\net8.0\Common Components.dll</HintPath>
-    </Reference>
-    <Reference Include="Domain Layer">
-      <HintPath>..\Domain Layer\bin\Debug\net8.0\Domain Layer.dll</HintPath>
-    </Reference>
-    <Reference Include="Service Layer">
-      <HintPath>..\Service Layer\bin\Debug\net8.0\Service Layer.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Common Components\Common Components.csproj" />
+    <ProjectReference Include="..\Domain Layer\Domain Layer.csproj" />
+    <ProjectReference Include="..\Service Layer\Service Layer.csproj" />
   </ItemGroup>
 
 </Project>

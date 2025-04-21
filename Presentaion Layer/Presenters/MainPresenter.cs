@@ -7,13 +7,16 @@ using System.Threading.Tasks;
 
 namespace Presentaion_Layer.Presenters
 {
-    internal class MainPresenter
+    internal class MainPresenter : IMainPresenter
     {
         IMainView _mainView;
-        
-        MainPresenter(IMainView MainView)
+
+        IShowPeopleListPresenter _showPeopleListPresenter;
+
+    public MainPresenter(IMainView MainView, IShowPeopleListPresenter showPeopleListPresenter)
         {
             _mainView = MainView;
+            _showPeopleListPresenter = showPeopleListPresenter;
             SubscribeToEvents();
         }
         private void SubscribeToEvents()
@@ -26,7 +29,7 @@ namespace Presentaion_Layer.Presenters
 
         private void _mainView_ShowPeople(object? sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _mainView.SetControlInUse((Control)_showPeopleListPresenter.GetShowPeopleList());
         }
     }
 }

@@ -42,8 +42,9 @@
             DataGridView.BackgroundColor = Color.FromArgb(50, 50, 50);
             DataGridView.BorderStyle = BorderStyle.None;
             DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataGridView.Location = new Point(67, 100);
+            DataGridView.Location = new Point(57, 100);
             DataGridView.Name = "DataGridView";
+            DataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             DataGridView.Size = new Size(534, 286);
             DataGridView.TabIndex = 0;
             // 
@@ -52,7 +53,7 @@
             ListNameLabel.AutoSize = true;
             ListNameLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             ListNameLabel.ForeColor = Color.FromArgb(242, 242, 242);
-            ListNameLabel.Location = new Point(281, 3);
+            ListNameLabel.Location = new Point(264, 3);
             ListNameLabel.Name = "ListNameLabel";
             ListNameLabel.Size = new Size(142, 30);
             ListNameLabel.TabIndex = 1;
@@ -65,7 +66,7 @@
             AddBtn.FlatStyle = FlatStyle.Flat;
             AddBtn.ForeColor = Color.Coral;
             AddBtn.Image = Properties.Resources.man_with_add_sign2;
-            AddBtn.Location = new Point(538, 58);
+            AddBtn.Location = new Point(528, 58);
             AddBtn.Name = "AddBtn";
             AddBtn.Size = new Size(63, 31);
             AddBtn.TabIndex = 2;
@@ -76,7 +77,7 @@
             SearchByLabel.AutoSize = true;
             SearchByLabel.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SearchByLabel.ForeColor = Color.FromArgb(242, 242, 242);
-            SearchByLabel.Location = new Point(71, 63);
+            SearchByLabel.Location = new Point(61, 63);
             SearchByLabel.Name = "SearchByLabel";
             SearchByLabel.Size = new Size(88, 23);
             SearchByLabel.TabIndex = 3;
@@ -86,7 +87,7 @@
             // 
             SearchByComboBox.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SearchByComboBox.FormattingEnabled = true;
-            SearchByComboBox.Location = new Point(167, 64);
+            SearchByComboBox.Location = new Point(157, 64);
             SearchByComboBox.Name = "SearchByComboBox";
             SearchByComboBox.Size = new Size(121, 25);
             SearchByComboBox.TabIndex = 4;
@@ -94,7 +95,7 @@
             // SearchTextBox
             // 
             SearchTextBox.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            SearchTextBox.Location = new Point(305, 64);
+            SearchTextBox.Location = new Point(295, 64);
             SearchTextBox.Name = "SearchTextBox";
             SearchTextBox.Size = new Size(133, 25);
             SearchTextBox.TabIndex = 5;

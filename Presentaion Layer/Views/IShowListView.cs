@@ -14,7 +14,9 @@ namespace Presentaion_Layer.Views
         event EventHandler Search;
 
         Image? ImageForAddBtn { get; set; }
-        IEnumerable<string>? SearchBy { get; set; }
+        IList<string>? SearchBy { get; set; }
+         string ListName { get; set; }
+         string SearchByTxt { get ; set; }
 
         void SetListBindingSource(BindingSource bs);
     }

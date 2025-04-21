@@ -29,12 +29,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Domain Layer">
-      <HintPath>..\Domain Layer\bin\Debug\net8.0\Domain Layer.dll</HintPath>
-    </Reference>
-    <Reference Include="Service Layer">
-      <HintPath>..\Service Layer\bin\Debug\net8.0\Service Layer.dll</HintPath>
-    </Reference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.4" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common Components\Common Components.csproj" />
+    <ProjectReference Include="..\Domain Layer\Domain Layer.csproj" />
+    <ProjectReference Include="..\Infrastructure Layer\Infrastructure Layer.csproj" />
+    <ProjectReference Include="..\Service Layer\Service Layer.csproj" />
+  </ItemGroup>
+    
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
 
 </Project>

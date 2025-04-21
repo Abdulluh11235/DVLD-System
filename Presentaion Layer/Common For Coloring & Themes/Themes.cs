@@ -10,19 +10,9 @@ namespace Presentaion_Layer.Common_For_Coloring___Themes
 
     public struct Mode
     {
-        /// <summary>
-        /// The background color of controls.
-        /// </summary>
+
         public Color BackgroundColor { get; init; }
-
-        /// <summary>
-        /// The accent color for borders or secondary elements.
-        /// </summary>
         public Color AccentColor { get; init; }
-
-        /// <summary>
-        /// The text color for controls.
-        /// </summary>
         public Color FontColor { get; init; }
     }
     public static class Themes

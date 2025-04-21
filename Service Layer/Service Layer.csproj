@@ -8,9 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Domain Layer">
-      <HintPath>..\Domain Layer\bin\Debug\net8.0\Domain Layer.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\Domain Layer\Domain Layer.csproj" />
   </ItemGroup>
 
 </Project>

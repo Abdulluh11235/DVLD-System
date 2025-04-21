@@ -2,6 +2,7 @@
 using Domain_Layer;
 using Infrastructure_Layer.DataAccess.Repositories.Specific.Country;
 using Microsoft.Data.SqlClient;
+using Service_Layer.Interfaces.Country;
 using Service_Layer.Interfaces.Person;
 using System;
 using System.Collections.Generic;
@@ -19,9 +20,9 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
     // Result Pattern stead of return bool in Operations delete,updtae
     {
         private readonly string _connectionString;
-        private readonly CountryRepository _countryRepository;
+        private readonly ICountryRepository _countryRepository;
 
-        public PersonRepository(string connectionString, CountryRepository countryRepository)
+        public PersonRepository(string connectionString, ICountryRepository countryRepository)
         {
             _connectionString = connectionString;
             _countryRepository = countryRepository;
@@ -39,11 +40,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
 
                 conn.Open();
                 using SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    people.Add(MapPerson(reader));
-                }
+                while(reader.Read()) people.Add(MapPerson(reader));      
             }
             catch (SqlException sqlEx)
             {
@@ -58,6 +55,58 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
 
             return people;
         }
+        public IEnumerable<IPersonModel> GetByValue(string val)
+        {
+            var people = new List<IPersonModel>();
+
+            try
+            {
+                string query = @"SELECT * FROM People 
+                         WHERE PersonID = @PersonID 
+                         OR NationalNo LIKE @NationalNO
+                         OR FirstName LIKE @FirstName 
+                         OR LastName LIKE @LastName";
+
+                using SqlConnection conn = new SqlConnection(_connectionString);
+                using SqlCommand cmd = new SqlCommand(query, conn);
+
+          
+                int personId;
+                cmd.Parameters.AddWithValue("@PersonID", 0);  
+
+                cmd.Parameters.AddWithValue("@NationalNO", "%" + val + "%");  // `LIKE` for NationalNo
+                cmd.Parameters.AddWithValue("@FirstName", "%" + val + "%");  // `LIKE` for FirstName
+                cmd.Parameters.AddWithValue("@LastName", "%" + val + "%");  // `LIKE` for LastName
+
+                if (int.TryParse(val, out personId))
+                {
+                    cmd.Parameters["@PersonID"].Value = personId;
+                    cmd.Parameters["@NationalNO"].Value = DBNull.Value;
+                    cmd.Parameters["@FirstName"].Value = DBNull.Value;
+                    cmd.Parameters["@LastName"].Value = DBNull.Value;
+                }
+
+                conn.Open();
+
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    people.Add(MapPerson(reader));
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Debug.WriteLine($"SQL Error in GetByValue: {sqlEx.Message}");
+                throw new DataAccessException("Error retrieving people data", sqlEx);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in GetByValue: {ex.Message}");
+                throw new DataAccessException("An unexpected error occurred", ex);
+            }
+            return people;
+        }
+
 
         public IPersonModel? GetPersonById(int id)
         {
@@ -196,7 +245,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             }
         }
 
-        private PersonModel MapPerson(SqlDataReader reader)
+        private IPersonModel MapPerson(SqlDataReader reader)
         {
             return new PersonModel
             {
@@ -207,7 +256,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 ThirdName = reader["ThirdName"] as string,
                 LastName = reader.GetString(reader.GetOrdinal("LastName")),
                 DateOfBirth = reader.GetDateTime(reader.GetOrdinal("DateOfBirth")),
-                Gender = reader.GetBoolean(reader.GetOrdinal("Gender")),
+                Gender = Convert.ToBoolean(reader.GetOrdinal("Gender")),
                 Address = reader.GetString(reader.GetOrdinal("Address")),
                 Phone = reader.GetString(reader.GetOrdinal("Phone")),
                 Email = reader["Email"] as string,
@@ -238,6 +287,115 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             baseParams.Insert(0, new SqlParameter("@PersonID", person.PersonID));
             return baseParams.ToArray();
         }
+
+        public IEnumerable<IPersonModel> GetByFirstName(string firstName)
+        {
+            var people = new List<IPersonModel>();
+
+            try
+            {
+                string query = @"SELECT * FROM People 
+                         WHERE FirstName LIKE @FirstName";
+
+                using SqlConnection conn = new SqlConnection(_connectionString);
+                using SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@FirstName", "%" + firstName + "%");
+
+                conn.Open();
+
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    people.Add(MapPerson(reader));
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Debug.WriteLine($"SQL Error in GetByFirstName: {sqlEx.Message}");
+                throw new DataAccessException("Error retrieving people data by first name", sqlEx);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in GetByFirstName: {ex.Message}");
+                throw new DataAccessException("An unexpected error occurred", ex);
+            }
+
+            return people;
+        }
+
+        public IEnumerable<IPersonModel> GetByLastName(string lastName)
+        {
+            var people = new List<IPersonModel>();
+
+            try
+            {
+                string query = @"SELECT * FROM People 
+                         WHERE LastName LIKE @LastName";
+
+                using SqlConnection conn = new SqlConnection(_connectionString);
+                using SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@LastName", "%" + lastName + "%");
+
+                conn.Open();
+
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    people.Add(MapPerson(reader));
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Debug.WriteLine($"SQL Error in GetByLastName: {sqlEx.Message}");
+                throw new DataAccessException("Error retrieving people data by last name", sqlEx);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in GetByLastName: {ex.Message}");
+                throw new DataAccessException("An unexpected error occurred", ex);
+            }
+
+            return people;
+        }
+
+        public IEnumerable<IPersonModel> GetByNationalNo(string nationalNo)
+        {
+            var people = new List<IPersonModel>();
+
+            try
+            {
+                string query = @"SELECT * FROM People 
+                         WHERE NationalNo LIKE @NationalNo";
+
+                using SqlConnection conn = new SqlConnection(_connectionString);
+                using SqlCommand cmd = new SqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@NationalNo", "%" + nationalNo + "%");
+
+                conn.Open();
+
+                using SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    people.Add(MapPerson(reader));
+                }
+            }
+            catch (SqlException sqlEx)
+            {
+                Debug.WriteLine($"SQL Error in GetByNationalNo: {sqlEx.Message}");
+                throw new DataAccessException("Error retrieving people data by national number", sqlEx);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in GetByNationalNo: {ex.Message}");
+                throw new DataAccessException("An unexpected error occurred", ex);
+            }
+
+            return people;
+        }
+
     }
 }
 

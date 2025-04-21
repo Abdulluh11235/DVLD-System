@@ -61,11 +61,13 @@
             PeopleBtn.Image = Properties.Resources.man;
             PeopleBtn.Location = new Point(0, 103);
             PeopleBtn.Name = "PeopleBtn";
+            PeopleBtn.Padding = new Padding(3);
             PeopleBtn.Size = new Size(200, 56);
             PeopleBtn.TabIndex = 1;
             PeopleBtn.Text = "People";
             PeopleBtn.TextImageRelation = TextImageRelation.ImageBeforeText;
             PeopleBtn.UseVisualStyleBackColor = false;
+            PeopleBtn.Click += PeopleBtn_Click;
             // 
             // HeaderSidePanel
             // 
@@ -106,7 +108,6 @@
             MainPanel.Name = "MainPanel";
             MainPanel.Size = new Size(600, 450);
             MainPanel.TabIndex = 1;
-            MainPanel.Paint += MainPanel_Paint;
             // 
             // MainForm
             // 
