@@ -106,18 +106,19 @@
             MainPanel.Dock = DockStyle.Fill;
             MainPanel.Location = new Point(200, 0);
             MainPanel.Name = "MainPanel";
-            MainPanel.Size = new Size(600, 450);
+            MainPanel.Size = new Size(584, 450);
             MainPanel.TabIndex = 1;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(784, 450);
             Controls.Add(MainPanel);
             Controls.Add(SidePanel);
+            MinimumSize = new Size(800, 473);
             Name = "MainForm";
-            Text = "Form1";
+            Text = "DVLD Management";
             SidePanel.ResumeLayout(false);
             HeaderSidePanel.ResumeLayout(false);
             HeaderSidePanel.PerformLayout();

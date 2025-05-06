@@ -27,7 +27,8 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             _connectionString = connectionString;
             _countryRepository = countryRepository;
         }
-
+         
+ 
         public IEnumerable<IPersonModel> GetAllPeople()
         {
             var people = new List<IPersonModel>();
@@ -39,7 +40,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 using SqlCommand cmd = new SqlCommand(query, conn);
 
                 conn.Open();
-                using SqlDataReader reader = cmd.ExecuteReader();
+                using SqlDataReader reader = cmd.ExecuteReader(); 
                 while(reader.Read()) people.Add(MapPerson(reader));      
             }
             catch (SqlException sqlEx)
@@ -53,57 +54,6 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 throw new DataAccessException("An unexpected error occurred", ex);
             }
 
-            return people;
-        }
-        public IEnumerable<IPersonModel> GetByValue(string val)
-        {
-            var people = new List<IPersonModel>();
-
-            try
-            {
-                string query = @"SELECT * FROM People 
-                         WHERE PersonID = @PersonID 
-                         OR NationalNo LIKE @NationalNO
-                         OR FirstName LIKE @FirstName 
-                         OR LastName LIKE @LastName";
-
-                using SqlConnection conn = new SqlConnection(_connectionString);
-                using SqlCommand cmd = new SqlCommand(query, conn);
-
-          
-                int personId;
-                cmd.Parameters.AddWithValue("@PersonID", 0);  
-
-                cmd.Parameters.AddWithValue("@NationalNO", "%" + val + "%");  // `LIKE` for NationalNo
-                cmd.Parameters.AddWithValue("@FirstName", "%" + val + "%");  // `LIKE` for FirstName
-                cmd.Parameters.AddWithValue("@LastName", "%" + val + "%");  // `LIKE` for LastName
-
-                if (int.TryParse(val, out personId))
-                {
-                    cmd.Parameters["@PersonID"].Value = personId;
-                    cmd.Parameters["@NationalNO"].Value = DBNull.Value;
-                    cmd.Parameters["@FirstName"].Value = DBNull.Value;
-                    cmd.Parameters["@LastName"].Value = DBNull.Value;
-                }
-
-                conn.Open();
-
-                using SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    people.Add(MapPerson(reader));
-                }
-            }
-            catch (SqlException sqlEx)
-            {
-                Debug.WriteLine($"SQL Error in GetByValue: {sqlEx.Message}");
-                throw new DataAccessException("Error retrieving people data", sqlEx);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Error in GetByValue: {ex.Message}");
-                throw new DataAccessException("An unexpected error occurred", ex);
-            }
             return people;
         }
 
@@ -300,7 +250,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 using SqlConnection conn = new SqlConnection(_connectionString);
                 using SqlCommand cmd = new SqlCommand(query, conn);
 
-                cmd.Parameters.AddWithValue("@FirstName", "%" + firstName + "%");
+                cmd.Parameters.AddWithValue("@FirstName",firstName+"%");
 
                 conn.Open();
 
@@ -336,7 +286,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 using SqlConnection conn = new SqlConnection(_connectionString);
                 using SqlCommand cmd = new SqlCommand(query, conn);
 
-                cmd.Parameters.AddWithValue("@LastName", "%" + lastName + "%");
+                cmd.Parameters.AddWithValue("@LastName",lastName+"%");
 
                 conn.Open();
 
@@ -367,12 +317,14 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             try
             {
                 string query = @"SELECT * FROM People 
-                         WHERE NationalNo LIKE @NationalNo";
+                 WHERE NationalNo LIKE @NationalNo";
+
+
 
                 using SqlConnection conn = new SqlConnection(_connectionString);
                 using SqlCommand cmd = new SqlCommand(query, conn);
 
-                cmd.Parameters.AddWithValue("@NationalNo", "%" + nationalNo + "%");
+                cmd.Parameters.AddWithValue("@NationalNo", nationalNo + "%");
 
                 conn.Open();
 

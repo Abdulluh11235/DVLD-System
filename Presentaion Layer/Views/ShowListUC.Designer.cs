@@ -28,56 +28,120 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridView = new DataGridView();
-            ListNameLabel = new Label();
+            contextMenuStrip1 = new ContextMenuStrip(components);
+            editToolStripMenuItem = new ToolStripMenuItem();
+            deleteToolStripMenuItem = new ToolStripMenuItem();
+            showDetailsToolStripMenuItem = new ToolStripMenuItem();
+            HeaderLabel = new Label();
             AddBtn = new Button();
             SearchByLabel = new Label();
             SearchByComboBox = new ComboBox();
             SearchTextBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)DataGridView).BeginInit();
+            contextMenuStrip1.SuspendLayout();
             SuspendLayout();
             // 
             // DataGridView
             // 
+            DataGridView.AllowUserToAddRows = false;
+            DataGridView.AllowUserToDeleteRows = false;
+            DataGridView.AllowUserToResizeColumns = false;
+            DataGridView.AllowUserToResizeRows = false;
+            DataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            DataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             DataGridView.BackgroundColor = Color.FromArgb(50, 50, 50);
             DataGridView.BorderStyle = BorderStyle.None;
-            DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            DataGridView.Location = new Point(57, 100);
+            DataGridView.CellBorderStyle = DataGridViewCellBorderStyle.SunkenVertical;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = Color.FromArgb(242, 242, 242);
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            DataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            DataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            DataGridView.ContextMenuStrip = contextMenuStrip1;
+            DataGridView.GridColor = Color.Silver;
+            DataGridView.Location = new Point(72, 100);
             DataGridView.Name = "DataGridView";
+            DataGridView.ReadOnly = true;
             DataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            DataGridView.RowHeadersVisible = false;
             DataGridView.Size = new Size(534, 286);
             DataGridView.TabIndex = 0;
+            DataGridView.CellFormatting += DataGridView_CellFormatting;
             // 
-            // ListNameLabel
+            // contextMenuStrip1
             // 
-            ListNameLabel.AutoSize = true;
-            ListNameLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            ListNameLabel.ForeColor = Color.FromArgb(242, 242, 242);
-            ListNameLabel.Location = new Point(264, 3);
-            ListNameLabel.Name = "ListNameLabel";
-            ListNameLabel.Size = new Size(142, 30);
-            ListNameLabel.TabIndex = 1;
-            ListNameLabel.Text = "Lorem Ipsum";
+            contextMenuStrip1.BackColor = Color.FromArgb(50, 50, 50);
+            contextMenuStrip1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            contextMenuStrip1.Items.AddRange(new ToolStripItem[] { editToolStripMenuItem, deleteToolStripMenuItem, showDetailsToolStripMenuItem });
+            contextMenuStrip1.Name = "contextMenuStrip1";
+            contextMenuStrip1.RenderMode = ToolStripRenderMode.System;
+            contextMenuStrip1.Size = new Size(181, 92);
+            // 
+            // editToolStripMenuItem
+            // 
+            editToolStripMenuItem.Image = Properties.Resources.edit;
+            editToolStripMenuItem.Name = "editToolStripMenuItem";
+            editToolStripMenuItem.Size = new Size(180, 22);
+            editToolStripMenuItem.Text = " Edit ";
+            editToolStripMenuItem.Click += editToolStripMenuItem_Click;
+            // 
+            // deleteToolStripMenuItem
+            // 
+            deleteToolStripMenuItem.Image = Properties.Resources.cross;
+            deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            deleteToolStripMenuItem.Size = new Size(180, 22);
+            deleteToolStripMenuItem.Text = "Delete";
+            deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
+            // 
+            // showDetailsToolStripMenuItem
+            // 
+            showDetailsToolStripMenuItem.Image = Properties.Resources.eye;
+            showDetailsToolStripMenuItem.Name = "showDetailsToolStripMenuItem";
+            showDetailsToolStripMenuItem.Size = new Size(180, 22);
+            showDetailsToolStripMenuItem.Text = "Show Details";
+            showDetailsToolStripMenuItem.Click += showDetailsToolStripMenuItem_Click;
+            // 
+            // HeaderLabel
+            // 
+            HeaderLabel.Anchor = AnchorStyles.Top;
+            HeaderLabel.AutoSize = true;
+            HeaderLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            HeaderLabel.ForeColor = Color.FromArgb(242, 242, 242);
+            HeaderLabel.Location = new Point(280, 14);
+            HeaderLabel.Name = "HeaderLabel";
+            HeaderLabel.Size = new Size(142, 30);
+            HeaderLabel.TabIndex = 1;
+            HeaderLabel.Text = "Lorem Ipsum";
             // 
             // AddBtn
             // 
+            AddBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             AddBtn.BackColor = Color.FromArgb(60, 60, 60);
             AddBtn.FlatAppearance.BorderSize = 0;
             AddBtn.FlatStyle = FlatStyle.Flat;
             AddBtn.ForeColor = Color.Coral;
             AddBtn.Image = Properties.Resources.man_with_add_sign2;
-            AddBtn.Location = new Point(528, 58);
+            AddBtn.Location = new Point(543, 58);
             AddBtn.Name = "AddBtn";
             AddBtn.Size = new Size(63, 31);
             AddBtn.TabIndex = 2;
             AddBtn.UseVisualStyleBackColor = false;
+            AddBtn.Click += AddBtn_Click;
             // 
             // SearchByLabel
             // 
             SearchByLabel.AutoSize = true;
             SearchByLabel.Font = new Font("Segoe UI", 12.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SearchByLabel.ForeColor = Color.FromArgb(242, 242, 242);
-            SearchByLabel.Location = new Point(61, 63);
+            SearchByLabel.Location = new Point(76, 63);
             SearchByLabel.Name = "SearchByLabel";
             SearchByLabel.Size = new Size(88, 23);
             SearchByLabel.TabIndex = 3;
@@ -85,9 +149,10 @@
             // 
             // SearchByComboBox
             // 
+            SearchByComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             SearchByComboBox.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             SearchByComboBox.FormattingEnabled = true;
-            SearchByComboBox.Location = new Point(157, 64);
+            SearchByComboBox.Location = new Point(172, 64);
             SearchByComboBox.Name = "SearchByComboBox";
             SearchByComboBox.Size = new Size(121, 25);
             SearchByComboBox.TabIndex = 4;
@@ -95,10 +160,11 @@
             // SearchTextBox
             // 
             SearchTextBox.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold);
-            SearchTextBox.Location = new Point(295, 64);
+            SearchTextBox.Location = new Point(301, 64);
             SearchTextBox.Name = "SearchTextBox";
-            SearchTextBox.Size = new Size(133, 25);
+            SearchTextBox.Size = new Size(121, 25);
             SearchTextBox.TabIndex = 5;
+            SearchTextBox.KeyUp += SearchTextBox_KeyUp;
             // 
             // ShowListUC
             // 
@@ -109,11 +175,13 @@
             Controls.Add(SearchByComboBox);
             Controls.Add(SearchByLabel);
             Controls.Add(AddBtn);
-            Controls.Add(ListNameLabel);
+            Controls.Add(HeaderLabel);
             Controls.Add(DataGridView);
+            DoubleBuffered = true;
             Name = "ShowListUC";
             Size = new Size(681, 421);
             ((System.ComponentModel.ISupportInitialize)DataGridView).EndInit();
+            contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -121,10 +189,14 @@
         #endregion
 
         private DataGridView DataGridView;
-        private Label ListNameLabel;
+        private Label HeaderLabel;
         private Button AddBtn;
         private Label SearchByLabel;
         private ComboBox SearchByComboBox;
         private TextBox SearchTextBox;
+        private ContextMenuStrip contextMenuStrip1;
+        private ToolStripMenuItem editToolStripMenuItem;
+        private ToolStripMenuItem deleteToolStripMenuItem;
+        private ToolStripMenuItem showDetailsToolStripMenuItem;
     }
 }

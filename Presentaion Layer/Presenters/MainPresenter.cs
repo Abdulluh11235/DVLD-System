@@ -29,7 +29,7 @@ namespace Presentaion_Layer.Presenters
 
         private void _mainView_ShowPeople(object? sender, EventArgs e)
         {
-            _mainView.SetControlInUse((Control)_showPeopleListPresenter.GetShowPeopleList());
+            _mainView.SetControlInUse((Control)_showPeopleListPresenter.GetShowPeopleList                                                                                               ());
         }
     }
 }

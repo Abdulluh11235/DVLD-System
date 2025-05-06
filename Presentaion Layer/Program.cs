@@ -12,6 +12,8 @@ using Domain_Layer;
 using Domain_Layer.Models.Country;
 using Microsoft.VisualBasic.ApplicationServices;
 using Service_Layer.Common_Services;
+using Presentaion_Layer.Views.People;
+using Presentaion_Layer.Presenters.Person;
 namespace Presentaion_Layer;
 internal static class Program
 {
@@ -21,7 +23,6 @@ internal static class Program
     [STAThread]
     static void Main()
     {
-
 
         ApplicationConfiguration.Initialize();
         // config
@@ -34,9 +35,6 @@ internal static class Program
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         var services = new ServiceCollection();
-        // Register Models
-        services.AddTransient<IPersonModel, PersonModel>();
-        services.AddTransient<ICountryModel, CountryModel>();
 
 
         // Register Infrastruct 
@@ -46,27 +44,37 @@ internal static class Program
         services.AddTransient<IPersonRepository>(provider =>
         {
             var countryRepo = provider.GetRequiredService<ICountryRepository>();
-            return new PersonRepository(connectionString!, countryRepo);
+           return new PersonRepository(connectionString!, countryRepo);
         });
 
         // Register Services 
         services.AddTransient<IPersonServices, PersonServices>();
+        services.AddTransient<ICountryServices, CountryServices>();
         services.AddTransient<IModelDataAnnotationCheck, ModelDataAnnotationCheck>();
 
         // Register Views
         services.AddTransient<IMainView, MainForm>();
-        services.AddTransient<IShowListView,ShowListUC>(); 
-
+        services.AddTransient<IShowListView,ShowListUC>();
+        services.AddTransient<IAddEditPersonView, AddEditPersonForm>();
+        // change name for a general container for shows
+        services.AddTransient<IShowItemForm, ShowItemForm>();
+        
+        services.AddTransient<IShowPersonUC, ShowPersonUC>();
         // Register Presenters
         services.AddTransient<IMainPresenter, MainPresenter>();
         services.AddTransient<IShowPeopleListPresenter, ShowPeopleListPresenter>();
+        services.AddTransient<IAddPersonPresenter, AddPersonPresenter>();
+        services.AddTransient<IEditPersonPersenter, EditPersonPersenter>();
+        services.AddTransient<IShowPersonUCPresenter, ShowPersonUCPresenter>();
+        // change name for a general container for shows
+        services.AddTransient<IShowItemPresenter, ShowItemPresenter>();
+
 
 
         var provider = services.BuildServiceProvider();
 
         var presenter = provider.GetRequiredService<IMainPresenter>();
 
-
-        Application.Run((Form) presenter.GetMainView() );
+         Application.Run((Form) presenter.GetMainView() );
     }
 }

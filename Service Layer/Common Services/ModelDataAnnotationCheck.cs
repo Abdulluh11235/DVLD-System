@@ -30,7 +30,7 @@ namespace Service_Layer.Common_Services
                     stringBuilder.Append(validationResult.ErrorMessage)
                                  .AppendLine();
                 }                     
-                throw new ArgumentException(stringBuilder.ToString(),nameof(domainModel) );
+                throw new ArgumentException(stringBuilder.ToString());
             }
 
         }

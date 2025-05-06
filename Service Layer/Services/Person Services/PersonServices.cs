@@ -42,19 +42,19 @@ namespace Service_Layer.Interfaces
 
         public IEnumerable<IPersonModel> GetByFirstName(string val)
         {
-            NoEmptyORNull(val);
+           // NoEmptyORNull(val);
             return  _personRepository.GetByFirstName(val);
         }
 
         public IEnumerable<IPersonModel> GetByLastName(string val)
         {
-            NoEmptyORNull(val); 
+           // NoEmptyORNull(val); 
             return _personRepository.GetByLastName(val);
         }
 
         public IEnumerable<IPersonModel> GetByNationalNo(string val)
         {
-            NoEmptyORNull(val);
+           // NoEmptyORNull(val);
             return _personRepository.GetByNationalNo(val);
         }
 
@@ -76,10 +76,6 @@ namespace Service_Layer.Interfaces
             _modelDataAnnotationCheck.ValidateModelDataAnnotations(personModel);
         }
 
-        private void NoEmptyORNull(string str)
-        {
-            if (string.IsNullOrWhiteSpace(str))  
-                throw new ArgumentException("The input cannot be empty,", nameof(str));
-        }
+     
     }
 }

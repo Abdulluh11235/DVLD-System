@@ -12,12 +12,22 @@ namespace Presentaion_Layer.Views
         event EventHandler RemoveFromList;
         event EventHandler EditItemInList;
         event EventHandler Search;
+        event EventHandler ShowDetailsForItem ;
 
+
+
+
+        int SelectedIndex { get; }
         Image? ImageForAddBtn { get; set; }
         IList<string>? SearchBy { get; set; }
-         string ListName { get; set; }
-         string SearchByTxt { get ; set; }
+        string ListName { get; set; }
+        string SearchByTxt { get ; set; }
+        string SearchByCategory { get; }
+        public string Head { set; get; }
+        public int SelectedID { get; }
 
+
+        void HideColumn(string ColName);
         void SetListBindingSource(BindingSource bs);
     }
 
