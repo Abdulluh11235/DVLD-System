@@ -25,9 +25,9 @@ namespace Domain_Layer
         string NationalNo { get; set; }
         string Address { get; set; }
         ICountryModel Country { get; set; }
-       
+
         [DisplayName("Country Name")]
-       public string CountryName { get; }
+        public string CountryName { get; }
 
         string? Email { get; set; }
         string Phone { get; set; }

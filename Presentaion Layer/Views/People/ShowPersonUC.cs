@@ -35,7 +35,7 @@ public partial class ShowPersonUC : UserControl, IShowPersonUC
         AddressLabel.Text = PersonModel.Address;
         DateOfBirthLabel.Text = PersonModel.DateOfBirth.ToString("MM/dd/yyyy");
         PhoneLabel.Text = PersonModel.Phone;
-        CountryLabel.Text = PersonModel.CountryName;
+        CountryLabel.Text = PersonModel.Country.Name;
         //  PersonPictureBox.Image = Image.FromFile( PersonModel.ImagePath);
 
     }

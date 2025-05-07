@@ -26,9 +26,9 @@ namespace Presentaion_Layer.Views
         public string Head { set; get; }
         public int SelectedID { get; }
 
-
-        void HideColumn(string ColName);
         void SetListBindingSource(BindingSource bs);
+        void HideColumn(string ColName);
+
     }
 
 }

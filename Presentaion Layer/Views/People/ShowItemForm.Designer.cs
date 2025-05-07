@@ -30,12 +30,15 @@
         {
             SuspendLayout();
             // 
-            // ShowPersonForm
+            // ShowItemForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(693, 331);
-            Name = "ShowPersonForm";
+            AutoSize = true;
+            ClientSize = new Size(723, 361);
+            MaximizeBox = false;
+            Name = "ShowItemForm";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "ShowPersonForm";
             Load += ShowPersonForm_Load;
             ResumeLayout(false);

@@ -1,12 +1,11 @@
 ﻿
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
-namespace Domain_Layer.Models.Country
+namespace Domain_Layer.Models.Country;
+public interface ICountryModel
 {
-    public interface ICountryModel
-    {
-        int Id { get; set; }
-        string Name { get; }
+    int Id { get; set; }
+    string Name { get; }
 
-    }
 }

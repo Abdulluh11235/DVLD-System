@@ -60,13 +60,7 @@ public partial class ShowListUC : UserControl, IShowListView
     {
         DataGridView.DataSource = bs;
     }
-    public void HideColumn(string columnName) // Column Is Still In Memory  Tho
-    {
-        if (DataGridView.Columns.Contains(columnName))
-        {
-            DataGridView.Columns[columnName].Visible = false;
-        }
-    }
+
 
     private void AddBtn_Click(object sender, EventArgs e)
     {
@@ -103,5 +97,11 @@ public partial class ShowListUC : UserControl, IShowListView
     private void showDetailsToolStripMenuItem_Click(object sender, EventArgs e)
     {
         ShowDetailsForItem.Invoke(this, e);
+    }
+
+    public void HideColumn(string ColName)
+    {
+        if (DataGridView.Columns.Contains(ColName))
+            DataGridView.Columns[ColName].Visible = false;
     }
 }

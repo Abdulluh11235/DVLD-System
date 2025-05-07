@@ -75,6 +75,7 @@ internal static class Program
 
         var presenter = provider.GetRequiredService<IMainPresenter>();
 
-         Application.Run((Form) presenter.GetMainView() );
+      // Application.Run(new SignInForm() );
+     Application.Run((Form) presenter.GetMainView() );
     }
 }
