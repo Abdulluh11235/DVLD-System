@@ -27,9 +27,9 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             _connectionString = connectionString;
             _countryRepository = countryRepository;
         }
-         
- 
-        public IEnumerable<IPersonModel> GetAllPeople()
+
+
+        public async Task<IEnumerable<IPersonModel>> GetAllPeople()
         {
             var people = new List<IPersonModel>();
 
@@ -39,9 +39,12 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 using SqlConnection conn = new SqlConnection(_connectionString);
                 using SqlCommand cmd = new SqlCommand(query, conn);
 
-                conn.Open();
-                using SqlDataReader reader = cmd.ExecuteReader(); 
-                while(reader.Read()) people.Add(MapPerson(reader));      
+                await conn.OpenAsync(); 
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync(); 
+                while (await reader.ReadAsync()) 
+                {
+                    people.Add(MapPerson(reader));
+                }
             }
             catch (SqlException sqlEx)
             {
@@ -54,7 +57,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 throw new DataAccessException("An unexpected error occurred", ex);
             }
 
-            return people;
+            return people; // Return the list of people
         }
 
 

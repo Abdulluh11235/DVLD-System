@@ -14,6 +14,11 @@ using Microsoft.VisualBasic.ApplicationServices;
 using Service_Layer.Common_Services;
 using Presentaion_Layer.Views.People;
 using Presentaion_Layer.Presenters.Person;
+using Service_Layer.Interfaces.User;
+using Infrastructure_Layer.DataAccess.Repositories.Specific.User;
+using Service_Layer;
+using Service_Layer.Services.User_Services;
+using Presentaion_Layer.Presenters.User;
 namespace Presentaion_Layer;
 internal static class Program
 {
@@ -47,11 +52,18 @@ internal static class Program
            return new PersonRepository(connectionString!, countryRepo);
         });
 
+        services.AddTransient<IUserRepository>(provider =>
+        {
+            var PersonRepo = provider.GetRequiredService<IPersonRepository>();
+            return new UserRepository(connectionString!, PersonRepo);
+        }  );
+
         // Register Services 
         services.AddTransient<IPersonServices, PersonServices>();
         services.AddTransient<ICountryServices, CountryServices>();
         services.AddTransient<IModelDataAnnotationCheck, ModelDataAnnotationCheck>();
-
+        services.AddTransient<IUserServices,UserServices>();
+        services.AddSingleton<IPasswordHasher,PasswordHasher>();
         // Register Views
         services.AddTransient<IMainView, MainForm>();
         services.AddTransient<IShowListView,ShowListUC>();
@@ -63,6 +75,8 @@ internal static class Program
         // Register Presenters
         services.AddTransient<IMainPresenter, MainPresenter>();
         services.AddTransient<IShowPeopleListPresenter, ShowPeopleListPresenter>();
+        services.AddTransient<IShowUsersListPresenter, ShowUsersListPresenter>();
+
         services.AddTransient<IAddPersonPresenter, AddPersonPresenter>();
         services.AddTransient<IEditPersonPersenter, EditPersonPersenter>();
         services.AddTransient<IShowPersonUCPresenter, ShowPersonUCPresenter>();
@@ -75,7 +89,7 @@ internal static class Program
 
         var presenter = provider.GetRequiredService<IMainPresenter>();
 
-      // Application.Run(new SignInForm() );
+     // Application.Run(new SignInForm() );
      Application.Run((Form) presenter.GetMainView() );
     }
 }

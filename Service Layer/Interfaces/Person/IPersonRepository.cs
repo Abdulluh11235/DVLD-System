@@ -11,7 +11,7 @@ namespace Service_Layer.Interfaces.Person
     {
         int? AddPerson(IPersonModel person);
         bool DeletePerson(int id);
-        IEnumerable<IPersonModel> GetAllPeople();
+       Task< IEnumerable<IPersonModel> >GetAllPeople();
         IEnumerable<IPersonModel> GetByFirstName(string val);
         IEnumerable<IPersonModel> GetByLastName(string vla);
         IEnumerable<IPersonModel> GetByNationalNo(string vla);

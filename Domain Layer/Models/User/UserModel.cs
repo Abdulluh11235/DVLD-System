@@ -13,10 +13,14 @@ namespace Domain_Layer.Models.User
 
         [Range(0, int.MaxValue, ErrorMessage = "User ID cannot be less than zero.")]
         public int UserID { get; set; }
-        public required PersonModel Person { get; set; }
-        [StringLength(50, MinimumLength = 8, ErrorMessage = "Hashed Password Must Be Between 8 & 50")]
+        public required IPersonModel Person { get; set; }
+
+        [StringLength(20, MinimumLength= 4 )]
+        public required string  UserName { get; set; }
+        [StringLength(110, MinimumLength = 8, ErrorMessage = "Hashed Password Must Be Between 8 & 110")]
         [Browsable(false)]
         public required string HashedPassword { get; set; }
         public bool Active { get; set; }
+        public int PersonId { get => Person.PersonID; }
     }
 }

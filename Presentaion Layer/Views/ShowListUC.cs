@@ -104,4 +104,20 @@ public partial class ShowListUC : UserControl, IShowListView
         if (DataGridView.Columns.Contains(ColName))
             DataGridView.Columns[ColName].Visible = false;
     }
+    private int ColumnsWidth()
+    {
+      int width = 0;
+        foreach(DataGridViewColumn column in DataGridView.Columns)
+        {
+            width += column.Width;
+        }
+        return width;
+    }
+
+    private void ShowListUC_Load(object sender, EventArgs e)
+    {
+        if (DataGridView.ClientSize.Width >ColumnsWidth() )
+      
+            DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+    }
 }

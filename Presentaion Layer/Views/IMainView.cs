@@ -8,7 +8,9 @@ namespace Presentaion_Layer.Views
 {
     internal interface IMainView
     {
-         event EventHandler ShowPeople;
-         void  SetControlInUse(Control control);
+        event EventHandler ShowPeople;
+        void  SetControlInUse(Control control);
+        event EventHandler ShowUsers;
+
     }
 }

@@ -34,16 +34,16 @@ namespace Service_Layer.Interfaces
         }
 
 
-        public IEnumerable<IPersonModel> GetAllPeople()
+        public async Task< IEnumerable<IPersonModel> > GetAllPeople()
         {
-           return _personRepository.GetAllPeople();
+           return await _personRepository.GetAllPeople();
         }
 
 
-        public IEnumerable<IPersonModel> GetByFirstName(string val)
+        public   IEnumerable<IPersonModel>  GetByFirstName(string val)
         {
            // NoEmptyORNull(val);
-            return  _personRepository.GetByFirstName(val);
+            return   _personRepository.GetByFirstName(val);
         }
 
         public IEnumerable<IPersonModel> GetByLastName(string val)

@@ -51,7 +51,6 @@
             DataGridView.AllowUserToResizeColumns = false;
             DataGridView.AllowUserToResizeRows = false;
             DataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
             DataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             DataGridView.BackgroundColor = Color.FromArgb(50, 50, 50);
             DataGridView.BorderStyle = BorderStyle.None;
@@ -83,13 +82,13 @@
             contextMenuStrip1.Items.AddRange(new ToolStripItem[] { editToolStripMenuItem, deleteToolStripMenuItem, showDetailsToolStripMenuItem });
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.RenderMode = ToolStripRenderMode.System;
-            contextMenuStrip1.Size = new Size(181, 92);
+            contextMenuStrip1.Size = new Size(147, 70);
             // 
             // editToolStripMenuItem
             // 
             editToolStripMenuItem.Image = Properties.Resources.edit;
             editToolStripMenuItem.Name = "editToolStripMenuItem";
-            editToolStripMenuItem.Size = new Size(180, 22);
+            editToolStripMenuItem.Size = new Size(146, 22);
             editToolStripMenuItem.Text = " Edit ";
             editToolStripMenuItem.Click += editToolStripMenuItem_Click;
             // 
@@ -97,7 +96,7 @@
             // 
             deleteToolStripMenuItem.Image = Properties.Resources.cross;
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
-            deleteToolStripMenuItem.Size = new Size(180, 22);
+            deleteToolStripMenuItem.Size = new Size(146, 22);
             deleteToolStripMenuItem.Text = "Delete";
             deleteToolStripMenuItem.Click += deleteToolStripMenuItem_Click;
             // 
@@ -105,7 +104,7 @@
             // 
             showDetailsToolStripMenuItem.Image = Properties.Resources.eye;
             showDetailsToolStripMenuItem.Name = "showDetailsToolStripMenuItem";
-            showDetailsToolStripMenuItem.Size = new Size(180, 22);
+            showDetailsToolStripMenuItem.Size = new Size(146, 22);
             showDetailsToolStripMenuItem.Text = "Show Details";
             showDetailsToolStripMenuItem.Click += showDetailsToolStripMenuItem_Click;
             // 
@@ -128,7 +127,7 @@
             AddBtn.FlatAppearance.BorderSize = 0;
             AddBtn.FlatStyle = FlatStyle.Flat;
             AddBtn.ForeColor = Color.Coral;
-            AddBtn.Image = Properties.Resources.man_with_add_sign2;
+            AddBtn.Image = Properties.Resources.user_with_add_sign__3_;
             AddBtn.Location = new Point(543, 58);
             AddBtn.Name = "AddBtn";
             AddBtn.Size = new Size(63, 31);
@@ -180,6 +179,7 @@
             DoubleBuffered = true;
             Name = "ShowListUC";
             Size = new Size(681, 421);
+            Load += ShowListUC_Load;
             ((System.ComponentModel.ISupportInitialize)DataGridView).EndInit();
             contextMenuStrip1.ResumeLayout(false);
             ResumeLayout(false);

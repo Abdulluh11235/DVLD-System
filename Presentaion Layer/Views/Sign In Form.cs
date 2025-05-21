@@ -15,7 +15,6 @@ public partial class SignInForm : Form, ISignInView
 {
     public event Predicate<(string username, string password)> CheckCredentials;
     public event EventHandler SignInSucceeded;
-    public (string username, string password) Credentials { get; }
     public bool RememberMe => RememberMeCheckBox.Checked;
     public SignInForm()
     {
@@ -27,6 +26,7 @@ public partial class SignInForm : Form, ISignInView
         if (CheckCredentials((UserNameTextBox.Text, PasswordMaskedTextBox.Text)))
         {
             SignInSucceeded(this, EventArgs.Empty);
+            Close();
         }
         else
             MessageBox.Show("Invalid Username /Password");
