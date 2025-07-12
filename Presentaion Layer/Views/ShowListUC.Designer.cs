@@ -51,6 +51,7 @@
             DataGridView.AllowUserToResizeColumns = false;
             DataGridView.AllowUserToResizeRows = false;
             DataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             DataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             DataGridView.BackgroundColor = Color.FromArgb(50, 50, 50);
             DataGridView.BorderStyle = BorderStyle.None;
