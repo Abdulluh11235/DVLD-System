@@ -20,7 +20,7 @@ namespace Service_Layer.Interfaces
             _modelDataAnnotationCheck = modelDataAnnotationCheck;
         }
 
-        public int? AddPerson(IPersonModel person)
+        public int? AddPerson(PersonModel person)
         {
             ValidateModel(person);
             return _personRepository.AddPerson(person);
@@ -34,44 +34,46 @@ namespace Service_Layer.Interfaces
         }
 
 
-        public async Task< IEnumerable<IPersonModel> > GetAllPeople()
+        public async Task< IEnumerable<PersonModel> > GetAllPeople()
         {
            return await _personRepository.GetAllPeople();
         }
 
 
-        public   IEnumerable<IPersonModel>  GetByFirstName(string val)
+        public async Task<IEnumerable<PersonModel>>  GetByFirstName(string val)
         {
-           // NoEmptyORNull(val);
-            return   _personRepository.GetByFirstName(val);
+            return await  _personRepository.GetByFirstName(val);
         }
 
-        public IEnumerable<IPersonModel> GetByLastName(string val)
+        public async Task<IEnumerable<PersonModel>> GetByLastName(string val)
         {
-           // NoEmptyORNull(val); 
-            return _personRepository.GetByLastName(val);
+            return await _personRepository.GetByLastName(val);
         }
 
-        public IEnumerable<IPersonModel> GetByNationalNo(string val)
+        public async Task<IEnumerable<PersonModel>> GetByNationalNo(string val)
         {
-           // NoEmptyORNull(val);
-            return _personRepository.GetByNationalNo(val);
+            return await _personRepository.GetByNationalNo(val);
         }
 
 
-        public IPersonModel? GetPersonById(int id)
+        public PersonModel? GetPersonById(int id)
         {
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "ID must be greater than zero.");
             return _personRepository.GetPersonById(id);
         }
+        public PersonModel? GetPersonByNationalNo(string nationalNo) {
+            if (nationalNo is null) throw new ArgumentNullException();
+           
+            return _personRepository.GetPersonByNationalNo(nationalNo);
+        }
 
-        public bool UpdatePerson(IPersonModel person)
+        public bool UpdatePerson(PersonModel person)
         {
             ValidateModel(person);
             return _personRepository.UpdatePerson(person);
         }
-        public void ValidateModel(IPersonModel personModel)
+        public void ValidateModel(PersonModel personModel)
         {
             _modelDataAnnotationCheck.ValidateModelDataAnnotations(personModel);
         }

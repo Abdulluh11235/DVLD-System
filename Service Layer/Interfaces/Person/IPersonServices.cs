@@ -4,13 +4,14 @@ namespace Service_Layer.Interfaces.Person
 {
     public interface IPersonServices
     {
-        int? AddPerson(IPersonModel person);
+        int? AddPerson(PersonModel person);
         bool DeletePerson(int id);
-      Task<  IEnumerable<IPersonModel> > GetAllPeople();
-        IPersonModel? GetPersonById(int id);
-        bool UpdatePerson(IPersonModel person);
-        IEnumerable<IPersonModel> GetByFirstName(string val);
-        IEnumerable<IPersonModel> GetByLastName(string vla);
-        IEnumerable<IPersonModel> GetByNationalNo(string vla);
+       Task<  IEnumerable<PersonModel> > GetAllPeople();
+        PersonModel? GetPersonById(int id);
+        PersonModel? GetPersonByNationalNo(string nationalNo);
+        bool UpdatePerson(PersonModel person);
+        Task<IEnumerable<PersonModel> >GetByFirstName(string val);
+        Task<IEnumerable<PersonModel>> GetByLastName(string vla);
+        Task<IEnumerable<PersonModel>> GetByNationalNo(string vla);
     }
 }

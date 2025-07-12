@@ -29,9 +29,9 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
         }
 
 
-        public async Task<IEnumerable<IPersonModel>> GetAllPeople()
+        public async Task<IEnumerable<PersonModel>> GetAllPeople()
         {
-            var people = new List<IPersonModel>();
+            var people = new List<PersonModel>();
 
             try
             {
@@ -41,7 +41,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
 
                 await conn.OpenAsync(); 
                 using SqlDataReader reader = await cmd.ExecuteReaderAsync(); 
-                while (await reader.ReadAsync()) 
+                while ( await reader.ReadAsync()) 
                 {
                     people.Add(MapPerson(reader));
                 }
@@ -57,11 +57,11 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 throw new DataAccessException("An unexpected error occurred", ex);
             }
 
-            return people; // Return the list of people
+            return people; 
         }
 
 
-        public IPersonModel? GetPersonById(int id)
+        public PersonModel? GetPersonById(int id)
         {
             try
             {
@@ -91,8 +91,39 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 throw new DataAccessException("An unexpected error occurred", ex);
             }
         }
+        public PersonModel? GetPersonByNationalNo(string nationalNo)
+        {
+            try
+            {
+                string query = "SELECT * FROM People WHERE NationalNo = @NationalNo";
+                using SqlConnection conn = new SqlConnection(_connectionString);
+                using SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@NationalNo", nationalNo);
 
-        public int? AddPerson(IPersonModel person)
+                conn.Open();
+                using SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return MapPerson(reader);
+                }
+
+                return null;
+            }
+            catch (SqlException sqlEx)
+            {
+                Debug.WriteLine($"SQL Error in GetPersonByNationalNo: {sqlEx.Message}");
+                throw new DataAccessException($"Error retrieving person with NationalNo {nationalNo}", sqlEx);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error in GetPersonByNationalNo: {ex.Message}");
+                throw new DataAccessException("An unexpected error occurred", ex);
+            }
+        }
+
+
+        public int? AddPerson(PersonModel person)
         {
             if (person == null)
                 throw new ArgumentNullException(nameof(person));
@@ -137,7 +168,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             }
         }
 
-        public bool UpdatePerson(IPersonModel person)
+        public bool UpdatePerson(PersonModel person)
         {
             if (person == null)
                 throw new ArgumentNullException(nameof(person));
@@ -198,7 +229,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             }
         }
 
-        private IPersonModel MapPerson(SqlDataReader reader)
+        private PersonModel MapPerson(SqlDataReader reader)
         {
             return new PersonModel
             {
@@ -208,8 +239,8 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
                 SecondName = reader.GetString(reader.GetOrdinal("SecondName")),
                 ThirdName = reader["ThirdName"] as string,
                 LastName = reader.GetString(reader.GetOrdinal("LastName")),
-                DateOfBirth = reader.GetDateTime(reader.GetOrdinal("DateOfBirth")),
-                Gender = Convert.ToBoolean(reader.GetOrdinal("Gender")),
+                DateOfBirth = DateOnly.FromDateTime(reader.GetDateTime(reader.GetOrdinal("DateOfBirth"))),
+                Gender = Convert.ToBoolean(reader.GetByte(reader.GetOrdinal("Gender"))),
                 Address = reader.GetString(reader.GetOrdinal("Address")),
                 Phone = reader.GetString(reader.GetOrdinal("Phone")),
                 Email = reader["Email"] as string,
@@ -218,7 +249,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             };
         }
 
-        private SqlParameter[] GetAddParameters(IPersonModel person) => new SqlParameter[]
+        private SqlParameter[] GetAddParameters(PersonModel person) => new SqlParameter[]
         {
         new("@NationalNo", person.NationalNo),
         new("@FirstName", person.FirstName),
@@ -234,16 +265,16 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
         new("@ImagePath", (object?)person.ImagePath ?? DBNull.Value)
         };
 
-        private SqlParameter[] GetUpdateParameters(IPersonModel person)
+        private SqlParameter[] GetUpdateParameters(PersonModel person)
         {
             var baseParams = GetAddParameters(person).ToList();
             baseParams.Insert(0, new SqlParameter("@PersonID", person.PersonID));
             return baseParams.ToArray();
         }
 
-        public IEnumerable<IPersonModel> GetByFirstName(string firstName)
+        public async Task<IEnumerable<PersonModel> > GetByFirstName(string firstName)
         {
-            var people = new List<IPersonModel>();
+            var people = new List<PersonModel>();
 
             try
             {
@@ -255,10 +286,10 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
 
                 cmd.Parameters.AddWithValue("@FirstName",firstName+"%");
 
-                conn.Open();
+               await conn.OpenAsync();
 
-                using SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
                 {
                     people.Add(MapPerson(reader));
                 }
@@ -277,9 +308,9 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             return people;
         }
 
-        public IEnumerable<IPersonModel> GetByLastName(string lastName)
+        public async Task< IEnumerable<PersonModel> > GetByLastName(string lastName)
         {
-            var people = new List<IPersonModel>();
+            var people = new List<PersonModel>();
 
             try
             {
@@ -291,10 +322,10 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
 
                 cmd.Parameters.AddWithValue("@LastName",lastName+"%");
 
-                conn.Open();
+                await conn.OpenAsync();
 
-                using SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using SqlDataReader reader =await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
                 {
                     people.Add(MapPerson(reader));
                 }
@@ -313,9 +344,9 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
             return people;
         }
 
-        public IEnumerable<IPersonModel> GetByNationalNo(string nationalNo)
+        public async Task<IEnumerable<PersonModel> >GetByNationalNo(string nationalNo)
         {
-            var people = new List<IPersonModel>();
+            var people = new List<PersonModel>();
 
             try
             {
@@ -329,10 +360,10 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Person
 
                 cmd.Parameters.AddWithValue("@NationalNo", nationalNo + "%");
 
-                conn.Open();
+               await conn.OpenAsync();
 
-                using SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+                while (await reader.ReadAsync())
                 {
                     people.Add(MapPerson(reader));
                 }

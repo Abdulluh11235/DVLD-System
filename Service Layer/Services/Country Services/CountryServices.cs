@@ -15,12 +15,12 @@ namespace Service_Layer.Interfaces.Country
             _countryRepository = countryRepository;
         }
 
-        public IEnumerable<ICountryModel> GetAllCountries()
+        public async Task< IEnumerable<CountryModel> > GetAllCountries()
         {
-            return _countryRepository.GetAllCountries();
+            return await _countryRepository.GetAllCountries();
         }
 
-        public ICountryModel? GetCountryById(int id)
+        public CountryModel? GetCountryById(int id)
         {
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "ID must be greater than zero.");

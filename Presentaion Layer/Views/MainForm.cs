@@ -6,10 +6,13 @@ namespace Presentaion_Layer
     {
         public event EventHandler ShowPeople = delegate { };
         public event EventHandler ShowUsers = delegate { };
+        public event EventHandler ShowApplicationTypes = delegate { };
+        public event EventHandler ShowTestTypes = delegate { };
 
         public MainForm()
         {
             InitializeComponent();
+
         }
         public void SetControlInUse(Control control)
         {
@@ -33,6 +36,31 @@ namespace Presentaion_Layer
         private void UsersBtn_Click(object sender, EventArgs e)
         {
             ShowUsers?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void ApplicationBtn_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip1.Show(ApplicationBtn, ApplicationBtn.Size.Width + 1, 2);
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void manageApplicationTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowApplicationTypes?.Invoke(this, EventArgs.Empty);
+        }
+
+        private void AccountSettingsBtn_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip2.Show(AccountSettingsBtn, AccountSettingsBtn.Size.Width + 1, 2);
+        }
+
+        private void manageTestTypesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowTestTypes?.Invoke(this, EventArgs.Empty);
         }
     }
 }

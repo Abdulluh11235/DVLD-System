@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 namespace Domain_Layer
 {
-    public class PersonModel : IPersonModel
+    public class PersonModel 
     {
         [Range(0, int.MaxValue, ErrorMessage = "PersonID cannot be less than zero.")]
         public int PersonID { get; set; }
@@ -31,10 +31,11 @@ namespace Domain_Layer
         public required string LastName { get; set; }
 
         [Required(ErrorMessage = "Date of Birth is required.")]
-        public required DateTime DateOfBirth { get; set; }
+        public required DateOnly DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Gender is required.")]
         public required bool Gender { get; set; }
+        public string CountryName { get => Country.Name;}
 
         [Required(ErrorMessage = "Address is required.")]
         [StringLength(200, MinimumLength = 10, ErrorMessage = "Address must be between 10 and 200 characters.")]
@@ -48,11 +49,11 @@ namespace Domain_Layer
         public required string Phone { get; set; }
 
         [Required(ErrorMessage = "Country is required.")]
-        public required ICountryModel Country { get; set; }
+        [Browsable(false)]  
+        public required CountryModel Country { get; set; }
 
         [StringLength(250, ErrorMessage = "Image Path cannot be longer than 250 characters.")]
         public string? ImagePath { get; set; }
-        public string CountryName { get => Country.Name; }
 
     }
 }

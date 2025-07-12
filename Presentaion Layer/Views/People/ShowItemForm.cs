@@ -20,12 +20,8 @@ public partial class ShowItemForm : Form, IShowItemForm
 
     public void AddControl(Control c)
     {
-        if (Controls.Count == 0)
-        { 
-        c.Dock = DockStyle.Fill;
+        c.Dock = DockStyle.Top;
             Controls.Add(c);
-        } 
-        
     }
     private void ShowPersonForm_Load(object sender, EventArgs e)
     {

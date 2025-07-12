@@ -17,8 +17,11 @@ public partial class ShowListUC : UserControl, IShowListView
     public event EventHandler Search = delegate { };
     public event EventHandler ShowDetailsForItem = delegate { };
 
-
-
+    public bool BasicEditOnly
+    {
+        get;
+        set;
+    }
     public Image? ImageForAddBtn
     {
         get => AddBtn.Image;
@@ -29,7 +32,7 @@ public partial class ShowListUC : UserControl, IShowListView
         get => SearchByComboBox.DataSource as List<string> ?? new List<string>();
         set
         {
-            if (value != null && !value.Any())
+            if (value != null && !value.Any() && BasicEditOnly )
                 throw new ArgumentException("DataSource cannot be empty.");
             SearchByComboBox.DataSource = value;
         }
@@ -73,15 +76,6 @@ public partial class ShowListUC : UserControl, IShowListView
     {
         Search?.Invoke(this, e);
     }
-    public void FormatBoolColumn(string ColName, string True_text, string False_Text)
-    {
-
-    }
-
-    private void DataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
-    {
-
-    }
 
     private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
     {
@@ -99,25 +93,28 @@ public partial class ShowListUC : UserControl, IShowListView
         ShowDetailsForItem.Invoke(this, e);
     }
 
-    public void HideColumn(string ColName)
-    {
-        if (DataGridView.Columns.Contains(ColName))
-            DataGridView.Columns[ColName].Visible = false;
-    }
     private int ColumnsWidth()
     {
       int width = 0;
         foreach(DataGridViewColumn column in DataGridView.Columns)
-        {
             width += column.Width;
-        }
+
         return width;
     }
 
     private void ShowListUC_Load(object sender, EventArgs e)
     {
-        if (DataGridView.ClientSize.Width >ColumnsWidth() )
-      
+        if (BasicEditOnly) { SearchByLabel.Visible = false;
+        SearchTextBox.Visible = false;
+        SearchByComboBox.Visible = false;
+        AddBtn.Visible = false;
+            deleteToolStripMenuItem.Visible = false;
+            showDetailsToolStripMenuItem.Visible = false;   
+        }
+
+
+        if (DataGridView.ClientSize.Width > ColumnsWidth())
+
             DataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
     }
 }

@@ -4,7 +4,7 @@ namespace Service_Layer.Interfaces.Country
 {
     public interface ICountryServices
     {
-        IEnumerable<ICountryModel> GetAllCountries();
-        ICountryModel? GetCountryById(int id);
+       Task< IEnumerable<CountryModel> >GetAllCountries();
+        CountryModel? GetCountryById(int id);
     }
 }

@@ -6,8 +6,7 @@ namespace Presentaion_Layer.Presenters.Person;
 
 public class ShowPersonUCPresenter : IShowPersonUCPresenter
 {
-
-    public int PersonId { get; set; }
+   public int PersonId { get; set; }
     readonly IShowPersonUC _showPersonUC;
     readonly IPersonServices _personServices;
     readonly IEditPersonPersenter _editPersonPersenter;
@@ -17,15 +16,21 @@ public class ShowPersonUCPresenter : IShowPersonUCPresenter
         _personServices = personServices;
         _editPersonPersenter = editPersonPersenter;
     }
-
+    bool notSubscribed=true;
     public IShowPersonUC GetView()
     {
-        IPersonModel? person = _personServices.GetPersonById(PersonId);
+       PersonModel? person = _personServices.GetPersonById(PersonId);
+  
+        if(notSubscribed) {                                
         _showPersonUC.showEdit += _showPersonUC_showEdit;
+            notSubscribed = false;   
+        }
+      
 
         if (person is null) throw new Exception("Can\'t Show Form Without a Person");
 
         _showPersonUC.PersonModel = person;
+        _showPersonUC.update();
         return _showPersonUC;
     }
 

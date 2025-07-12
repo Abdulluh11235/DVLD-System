@@ -18,8 +18,8 @@ namespace Presentaion_Layer.Views.People;
 
 public partial class AddEditPersonForm : Form, IAddEditPersonView
 {
-    public event Predicate<IPersonModel> PersonSavedInDB = (p) => { return false; };
-    public event EventHandler<IPersonModel?> DataBack = delegate { };
+    public event Predicate<PersonModel> PersonSavedInDB = (p) => { return false; };
+    public event EventHandler<PersonModel?> DataBack = delegate { };
 
     Mode mode = Mode.Add;
     public BindingSource CountriesSource { set => CountryComboBox.DataSource = value; }
@@ -45,19 +45,20 @@ public partial class AddEditPersonForm : Form, IAddEditPersonView
     string Phone { get => PhoneTextBox.Text; }
     string Email { get => EmailTextBox.Text; }
 
-    bool Gender { get => Convert.ToBoolean(GenderComboBox.SelectedValue); }
-    DateTime? DateOfBirth
+    bool Gender { get => Convert.ToBoolean(GenderComboBox.SelectedIndex); }
+    DateOnly? DateOfBirth
     {
         get
         {
-            if (DateTime.TryParse(DateOfBirthMaskedTextBox.Text, out DateTime dob))
+            if (DateOnly.TryParse(DateOfBirthMaskedTextBox.Text, out DateOnly dob))
                 return dob;
             return null;
         }
     }
-    ICountryModel Country
+    CountryModel Country
     {
-        get { return new CountryModel { Name = CountryComboBox.SelectedText, Id = (int)CountryComboBox.SelectedValue! }; }
+        get { return (mode==Mode.Add)?new CountryModel { Name = CountryComboBox.Text.ToString(), Id = (int)CountryComboBox.SelectedValue! }:
+                PersonModel.Country; }
     }
     string NationalNo
     {
@@ -70,8 +71,8 @@ public partial class AddEditPersonForm : Form, IAddEditPersonView
 
     #endregion 
 
-    IPersonModel? _personModel;
-    public IPersonModel? PersonModel
+    PersonModel? _personModel;
+    public PersonModel? PersonModel
     {
         get => _personModel;
         set { _personModel = value; mode = Mode.Edit; }
@@ -81,42 +82,48 @@ public partial class AddEditPersonForm : Form, IAddEditPersonView
         InitializeComponent();
     }
 
-    private void FillForm(IPersonModel? personModel)
+    private void FillForm()
     {
-        if (personModel == null) return;
+        if (mode == Mode.Edit)
+        {
+            GenderComboBox.SelectedIndex = Convert.ToInt32(_personModel.Gender);
+            CountryComboBox.SelectedValue = _personModel.Country.Id;
 
-        FirstNameTextBox.Text = personModel.FirstName;
-        SecondNameTextBox.Text = personModel.SecondName;
-        ThirdNameTextBox.Text = personModel.ThirdName;
-        LastNameTextBox.Text = personModel.LastName;
+            CountryComboBox.Enabled = false;
+            GenderComboBox.Enabled = false;
+        }
+        else { 
+            GenderComboBox.SelectedIndex = 0;
+            return; }
 
-        PhoneTextBox.Text = personModel.Phone;
-        EmailTextBox.Text = personModel.Email;
+        FirstNameTextBox.Text = _personModel.FirstName;
+        SecondNameTextBox.Text = _personModel.SecondName;
+        ThirdNameTextBox.Text = _personModel.ThirdName;
+        LastNameTextBox.Text = _personModel.LastName;
 
-        GenderComboBox.SelectedValue = personModel.Gender;
-        GenderComboBox.Enabled = false;
+        PhoneTextBox.Text = _personModel.Phone;
+        EmailTextBox.Text = _personModel.Email;
 
-        CountryComboBox.SelectedValue = personModel.Country.Id;
-        CountryComboBox.Enabled = false;
 
-        DateOfBirthMaskedTextBox.Text = personModel.DateOfBirth.ToString("MM/dd/yyyy");
+  
 
-        NationalNoTextBox.Text = personModel.NationalNo;
+        DateOfBirthMaskedTextBox.Text = _personModel.DateOfBirth.ToString("MM/dd/yyyy");
+
+        NationalNoTextBox.Text = _personModel.NationalNo;
         NationalNoTextBox.Enabled = false;
 
 
-        AddressTextBox.Text = personModel.Address;
+        AddressTextBox.Text = _personModel.Address;
 
-        if (!string.IsNullOrWhiteSpace(personModel.ImagePath))
+        if (!string.IsNullOrWhiteSpace(_personModel.ImagePath))
         {
-            PersonPictureBox.Image = Image.FromFile(personModel.ImagePath);
+            PersonPictureBox.Image = Image.FromFile(_personModel.ImagePath);
         }
 
     }
-    private void AddEditPersonForm_Load(object sender, EventArgs e)
+    private  void AddEditPersonForm_Load(object sender, EventArgs e)
     {
-        FillForm(_personModel);
-        GenderComboBox.SelectedIndex = 0;
+        FillForm();
     }
 
     private void SetImgeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -126,7 +133,7 @@ public partial class AddEditPersonForm : Form, IAddEditPersonView
             PersonPictureBox.Image = Image.FromFile(ChoosePictureOpenFileDialog.FileName);
 
     }
-    private IPersonModel fillPerson()
+    private PersonModel fillPerson()
     {
        if (DateOfBirth == null)
          throw new NullReferenceException($"The {nameof(DateOfBirth)} cannot be null.");
@@ -140,7 +147,7 @@ public partial class AddEditPersonForm : Form, IAddEditPersonView
             Phone = Phone,
             Email = string.IsNullOrWhiteSpace(Email) ? null : Email,
             Gender = Gender,
-            DateOfBirth = (DateTime)DateOfBirth ,
+            DateOfBirth =(DateOnly)DateOfBirth ,
             Country = Country,
             NationalNo = NationalNo,
             Address = Address
@@ -158,7 +165,7 @@ public partial class AddEditPersonForm : Form, IAddEditPersonView
        PersonModel.Phone = Phone;
        PersonModel.Email = string.IsNullOrWhiteSpace(Email) ? null : Email;
        PersonModel.Gender = Gender;
-       PersonModel.DateOfBirth = (DateTime)DateOfBirth;
+       PersonModel.DateOfBirth = (DateOnly)DateOfBirth;
        PersonModel.Country = Country;
        PersonModel.NationalNo = NationalNo;
        PersonModel.Address = Address;

@@ -14,7 +14,7 @@ namespace Service_Layer.Common_Services
         {
 
         }
-        public void ValidateModelDataAnnotations<TModel>(TModel domainModel)
+        public  void ValidateModelDataAnnotations<TModel>(TModel domainModel)
         {
             if (domainModel == null) { throw new ArgumentNullException(nameof(domainModel)); }
             ICollection<ValidationResult> validationResultList = new List<ValidationResult>();
@@ -30,7 +30,7 @@ namespace Service_Layer.Common_Services
                     stringBuilder.Append(validationResult.ErrorMessage)
                                  .AppendLine();
                 }                     
-                throw new ArgumentException(stringBuilder.ToString());
+                throw new ValidationException(stringBuilder.ToString());
             }
 
         }

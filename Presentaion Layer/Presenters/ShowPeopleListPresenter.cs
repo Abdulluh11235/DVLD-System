@@ -12,10 +12,11 @@ using Service_Layer.Interfaces;
 
 namespace Presentaion_Layer.Presenters;
 
-public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPersonServices>, IShowPeopleListPresenter
+public class ShowPeopleListPresenter : BaseShowListPresenter<PersonModel, IPersonServices>, IShowPeopleListPresenter
 {
     private readonly IAddPersonPresenter _addPersonPresenter;
     private readonly IEditPersonPersenter _editPersonPresenter; 
+    private readonly IShowPersonUCPresenter _showPersonUCPresenter;
     private readonly IShowItemPresenter _showPersonPresenter;
 
     public ShowPeopleListPresenter(
@@ -23,12 +24,14 @@ public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPers
         IPersonServices personServices,
         IAddPersonPresenter addPersonPresenter,
         IEditPersonPersenter editPersonPresenter,
+        IShowPersonUCPresenter showPersonUCPresenter,
         IShowItemPresenter showPersonPresenter)
         : base(showListView, personServices)
     {
         _addPersonPresenter = addPersonPresenter;
         _editPersonPresenter = editPersonPresenter;
         _showPersonPresenter = showPersonPresenter;
+        _showPersonUCPresenter= showPersonUCPresenter;
     }
 
     protected override void InitializeSearchHandlers()
@@ -47,7 +50,9 @@ public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPers
         _showListView.Head = "Manage People";
 
         var people = await _services.GetAllPeople();
+
         UpdateList(people);
+
 
         _showListView.AddToList += _showListView_AddToList;
         _showListView.RemoveFromList += _showListView_RemoveFromList;
@@ -55,25 +60,19 @@ public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPers
         _showListView.ShowDetailsForItem += _showListView_ShowDetailsForItem;
     }
 
-    private void _showListView_AddToList(object? sender, EventArgs e)
+    private  void  _showListView_AddToList(object? sender, EventArgs e)
     {
         var addForm = _addPersonPresenter.GetView();
         addForm.DataBack += AddForm_DataBack;
         ((Form)addForm).ShowDialog();
     }
 
-    private void AddForm_DataBack(object? sender, IPersonModel? personModel)
+    private void AddForm_DataBack(object? sender, PersonModel? personModel)
     {
-        if (personModel == null) return;
-
-        if (_services.AddPerson(personModel).HasValue)
+        if (personModel is not  null) 
         {
             MessageBox.Show($"Person With Id {personModel.PersonID} Was Successfully Added");
             last.Add(personModel);
-        }
-        else
-        {
-            MessageBox.Show("Something Went Wrong");
         }
     }
 
@@ -81,8 +80,8 @@ public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPers
     {
         if (_services.DeletePerson(_showListView.SelectedID))
         {
-            last.RemoveAt(_showListView.SelectedIndex);
             MessageBox.Show($"Person With Id {_showListView.SelectedID} Was Successfully Deleted");
+            last.RemoveAt(_showListView.SelectedIndex);
         }
         else
         {
@@ -101,7 +100,7 @@ public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPers
         ((Form)editForm).ShowDialog();
     }
 
-    private void EditForm_DataBack(object? sender, IPersonModel? updatedPerson)
+    private void EditForm_DataBack(object? sender, PersonModel? updatedPerson)
     {
         if (updatedPerson == null) return;
 
@@ -118,8 +117,12 @@ public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPers
 
     private void _showListView_ShowDetailsForItem(object? sender, EventArgs e)
     {
-        _showPersonPresenter.PersonID = _showListView.SelectedID;
-        var showPersonForm = _showPersonPresenter.ShowPersonView();
+        int id=_showListView.SelectedID;
+        _showPersonUCPresenter.PersonId = id;
+        var showPersonControl = _showPersonUCPresenter.GetView();
+
+      var showPersonForm=   _showPersonPresenter.ShowView();
+        showPersonForm.AddControl((Control)showPersonControl);
         ((Form)showPersonForm).ShowDialog();
     }
 
@@ -128,13 +131,14 @@ public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPers
         if (int.TryParse(_showListView.SearchByTxt, out int id))
         {
             var person = _services.GetPersonById(id);
-            UpdateList(person != null ? new[] { person } : Array.Empty<IPersonModel>());
+            UpdateList(person != null ? new[] { person } : Array.Empty<PersonModel>());
         }
         else if (string.IsNullOrWhiteSpace(_showListView.SearchByTxt))
         {
 
             var people = await _services.GetAllPeople();
             UpdateList(people);
+
         }
         else
         {
@@ -142,21 +146,21 @@ public class ShowPeopleListPresenter : BaseShowListPresenter<IPersonModel, IPers
         }
     }
 
-    private void SearchByNationalNo()
+    private async void SearchByNationalNo()
     {
-        var results = _services.GetByNationalNo(_showListView.SearchByTxt);
+        var results = await _services.GetByNationalNo(_showListView.SearchByTxt);
         UpdateList(results);
     }
 
-    private void SearchByFirstName()
+    private async void SearchByFirstName()
     {
-        var results = _services.GetByFirstName(_showListView.SearchByTxt);
+        var results = await _services.GetByFirstName(_showListView.SearchByTxt);
         UpdateList(results);
     }
 
-    private void SearchByLastName()
+    private async void SearchByLastName()
     {
-        var results = _services.GetByLastName(_showListView.SearchByTxt);
+        var results = await _services.GetByLastName(_showListView.SearchByTxt);
         UpdateList(results);
     }
 

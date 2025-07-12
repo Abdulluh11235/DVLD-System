@@ -9,14 +9,16 @@ namespace Service_Layer.Interfaces.Person
 {
     public interface IPersonRepository
     {
-        int? AddPerson(IPersonModel person);
+        int? AddPerson(PersonModel person);
         bool DeletePerson(int id);
-       Task< IEnumerable<IPersonModel> >GetAllPeople();
-        IEnumerable<IPersonModel> GetByFirstName(string val);
-        IEnumerable<IPersonModel> GetByLastName(string vla);
-        IEnumerable<IPersonModel> GetByNationalNo(string vla);
+       Task< IEnumerable<PersonModel> >GetAllPeople();
+       Task< IEnumerable<PersonModel> > GetByFirstName(string val);
+       Task< IEnumerable<PersonModel> >GetByLastName(string vla);
+       Task< IEnumerable<PersonModel> >GetByNationalNo(string vla);
 
-        IPersonModel? GetPersonById(int id);
-        bool UpdatePerson(IPersonModel person);
+        PersonModel? GetPersonById(int id);
+        PersonModel? GetPersonByNationalNo(string nationalNo);
+
+        bool UpdatePerson(PersonModel person);
     }
 }

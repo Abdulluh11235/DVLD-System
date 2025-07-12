@@ -35,7 +35,8 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(723, 361);
+            ClientSize = new Size(770, 378);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "ShowItemForm";
             StartPosition = FormStartPosition.CenterScreen;

@@ -63,6 +63,26 @@ namespace Presentaion_Layer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap applications {
+            get {
+                object obj = ResourceManager.GetObject("applications", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap asking_for_a_person {
+            get {
+                object obj = ResourceManager.GetObject("asking for a person", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap basic_user_icon {
             get {
                 object obj = ResourceManager.GetObject("basic_user_icon", resourceCulture);
@@ -76,6 +96,16 @@ namespace Presentaion_Layer.Properties {
         internal static System.Drawing.Bitmap cross {
             get {
                 object obj = ResourceManager.GetObject("cross", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap driver {
+            get {
+                object obj = ResourceManager.GetObject("driver", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -116,6 +146,16 @@ namespace Presentaion_Layer.Properties {
         internal static System.Drawing.Bitmap formula_one_car {
             get {
                 object obj = ResourceManager.GetObject("formula_one_car", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap gear {
+            get {
+                object obj = ResourceManager.GetObject("gear", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -176,6 +216,26 @@ namespace Presentaion_Layer.Properties {
         internal static System.Drawing.Bitmap man_with_add_sign2 {
             get {
                 object obj = ResourceManager.GetObject("man with add sign2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap man_with_search_sign {
+            get {
+                object obj = ResourceManager.GetObject("man with search sign", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap man_with_search_sign1 {
+            get {
+                object obj = ResourceManager.GetObject("man with search sign1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

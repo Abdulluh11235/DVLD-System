@@ -68,13 +68,13 @@
             DataGridView.ContextMenuStrip = contextMenuStrip1;
             DataGridView.GridColor = Color.Silver;
             DataGridView.Location = new Point(72, 100);
+            DataGridView.MultiSelect = false;
             DataGridView.Name = "DataGridView";
             DataGridView.ReadOnly = true;
             DataGridView.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             DataGridView.RowHeadersVisible = false;
             DataGridView.Size = new Size(534, 286);
             DataGridView.TabIndex = 0;
-            DataGridView.CellFormatting += DataGridView_CellFormatting;
             // 
             // contextMenuStrip1
             // 
@@ -87,6 +87,7 @@
             // 
             // editToolStripMenuItem
             // 
+            editToolStripMenuItem.ForeColor = Color.White;
             editToolStripMenuItem.Image = Properties.Resources.edit;
             editToolStripMenuItem.Name = "editToolStripMenuItem";
             editToolStripMenuItem.Size = new Size(146, 22);
@@ -95,6 +96,7 @@
             // 
             // deleteToolStripMenuItem
             // 
+            deleteToolStripMenuItem.ForeColor = Color.White;
             deleteToolStripMenuItem.Image = Properties.Resources.cross;
             deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
             deleteToolStripMenuItem.Size = new Size(146, 22);
@@ -103,6 +105,7 @@
             // 
             // showDetailsToolStripMenuItem
             // 
+            showDetailsToolStripMenuItem.ForeColor = Color.White;
             showDetailsToolStripMenuItem.Image = Properties.Resources.eye;
             showDetailsToolStripMenuItem.Name = "showDetailsToolStripMenuItem";
             showDetailsToolStripMenuItem.Size = new Size(146, 22);
@@ -115,7 +118,7 @@
             HeaderLabel.AutoSize = true;
             HeaderLabel.Font = new Font("Segoe UI", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             HeaderLabel.ForeColor = Color.FromArgb(242, 242, 242);
-            HeaderLabel.Location = new Point(280, 14);
+            HeaderLabel.Location = new Point(265, 14);
             HeaderLabel.Name = "HeaderLabel";
             HeaderLabel.Size = new Size(142, 30);
             HeaderLabel.TabIndex = 1;

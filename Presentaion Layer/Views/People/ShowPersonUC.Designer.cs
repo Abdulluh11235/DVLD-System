@@ -89,7 +89,7 @@
             PersonDetailsGroupBox.Controls.Add(PersonIDConstLabel);
             PersonDetailsGroupBox.Location = new Point(23, 52);
             PersonDetailsGroupBox.Name = "PersonDetailsGroupBox";
-            PersonDetailsGroupBox.Size = new Size(673, 298);
+            PersonDetailsGroupBox.Size = new Size(709, 298);
             PersonDetailsGroupBox.TabIndex = 1;
             PersonDetailsGroupBox.TabStop = false;
             // 
@@ -98,7 +98,7 @@
             CountryLabel.AutoSize = true;
             CountryLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             CountryLabel.ForeColor = Color.LavenderBlush;
-            CountryLabel.Location = new Point(367, 201);
+            CountryLabel.Location = new Point(387, 201);
             CountryLabel.Name = "CountryLabel";
             CountryLabel.Size = new Size(103, 20);
             CountryLabel.TabIndex = 19;
@@ -110,7 +110,7 @@
             PhoneLabel.AutoSize = true;
             PhoneLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             PhoneLabel.ForeColor = Color.LavenderBlush;
-            PhoneLabel.Location = new Point(354, 154);
+            PhoneLabel.Location = new Point(374, 154);
             PhoneLabel.Name = "PhoneLabel";
             PhoneLabel.Size = new Size(103, 20);
             PhoneLabel.TabIndex = 18;
@@ -122,7 +122,7 @@
             DateOfBirthLabel.AutoSize = true;
             DateOfBirthLabel.Font = new Font("Segoe UI", 10.25F, FontStyle.Bold);
             DateOfBirthLabel.ForeColor = Color.LavenderBlush;
-            DateOfBirthLabel.Location = new Point(394, 106);
+            DateOfBirthLabel.Location = new Point(414, 106);
             DateOfBirthLabel.Name = "DateOfBirthLabel";
             DateOfBirthLabel.Size = new Size(125, 19);
             DateOfBirthLabel.TabIndex = 17;
@@ -134,7 +134,7 @@
             AddressLabel.AutoSize = true;
             AddressLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             AddressLabel.ForeColor = Color.LavenderBlush;
-            AddressLabel.Location = new Point(118, 250);
+            AddressLabel.Location = new Point(107, 250);
             AddressLabel.Name = "AddressLabel";
             AddressLabel.Size = new Size(103, 20);
             AddressLabel.TabIndex = 16;
@@ -146,7 +146,7 @@
             EmailLabel.AutoSize = true;
             EmailLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             EmailLabel.ForeColor = Color.LavenderBlush;
-            EmailLabel.Location = new Point(118, 201);
+            EmailLabel.Location = new Point(107, 201);
             EmailLabel.Name = "EmailLabel";
             EmailLabel.Size = new Size(103, 20);
             EmailLabel.TabIndex = 15;
@@ -158,7 +158,7 @@
             GenderLabel.AutoSize = true;
             GenderLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             GenderLabel.ForeColor = Color.LavenderBlush;
-            GenderLabel.Location = new Point(115, 154);
+            GenderLabel.Location = new Point(104, 154);
             GenderLabel.Name = "GenderLabel";
             GenderLabel.Size = new Size(103, 20);
             GenderLabel.TabIndex = 14;
@@ -170,7 +170,7 @@
             NationalNoLabel.AutoSize = true;
             NationalNoLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             NationalNoLabel.ForeColor = Color.LavenderBlush;
-            NationalNoLabel.Location = new Point(139, 106);
+            NationalNoLabel.Location = new Point(128, 106);
             NationalNoLabel.Name = "NationalNoLabel";
             NationalNoLabel.Size = new Size(103, 20);
             NationalNoLabel.TabIndex = 13;
@@ -182,7 +182,7 @@
             NameLabel.AutoSize = true;
             NameLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             NameLabel.ForeColor = Color.LavenderBlush;
-            NameLabel.Location = new Point(111, 58);
+            NameLabel.Location = new Point(100, 58);
             NameLabel.Name = "NameLabel";
             NameLabel.Size = new Size(103, 20);
             NameLabel.TabIndex = 12;
@@ -205,7 +205,7 @@
             // editPersonLinkLabel
             // 
             editPersonLinkLabel.AutoSize = true;
-            editPersonLinkLabel.Location = new Point(545, 64);
+            editPersonLinkLabel.Location = new Point(576, 64);
             editPersonLinkLabel.Name = "editPersonLinkLabel";
             editPersonLinkLabel.Size = new Size(90, 15);
             editPersonLinkLabel.TabIndex = 10;
@@ -216,7 +216,7 @@
             // PersonPictureBox
             // 
             PersonPictureBox.Image = Properties.Resources.image__1_;
-            PersonPictureBox.Location = new Point(522, 110);
+            PersonPictureBox.Location = new Point(553, 110);
             PersonPictureBox.Name = "PersonPictureBox";
             PersonPictureBox.Size = new Size(134, 98);
             PersonPictureBox.SizeMode = PictureBoxSizeMode.Zoom;
@@ -228,7 +228,7 @@
             CountryConstLabel.AutoSize = true;
             CountryConstLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             CountryConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            CountryConstLabel.Location = new Point(287, 202);
+            CountryConstLabel.Location = new Point(307, 202);
             CountryConstLabel.Name = "CountryConstLabel";
             CountryConstLabel.Size = new Size(74, 20);
             CountryConstLabel.TabIndex = 8;
@@ -239,7 +239,7 @@
             PhoneConstLabel.AutoSize = true;
             PhoneConstLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             PhoneConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            PhoneConstLabel.Location = new Point(287, 154);
+            PhoneConstLabel.Location = new Point(307, 154);
             PhoneConstLabel.Name = "PhoneConstLabel";
             PhoneConstLabel.Size = new Size(61, 20);
             PhoneConstLabel.TabIndex = 7;
@@ -250,7 +250,7 @@
             DateOfBirthConstLabel.AutoSize = true;
             DateOfBirthConstLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             DateOfBirthConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            DateOfBirthConstLabel.Location = new Point(287, 106);
+            DateOfBirthConstLabel.Location = new Point(307, 106);
             DateOfBirthConstLabel.Name = "DateOfBirthConstLabel";
             DateOfBirthConstLabel.Size = new Size(110, 20);
             DateOfBirthConstLabel.TabIndex = 6;
@@ -261,7 +261,7 @@
             AddressConstLabel.AutoSize = true;
             AddressConstLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             AddressConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            AddressConstLabel.Location = new Point(34, 250);
+            AddressConstLabel.Location = new Point(23, 250);
             AddressConstLabel.Name = "AddressConstLabel";
             AddressConstLabel.Size = new Size(74, 20);
             AddressConstLabel.TabIndex = 5;
@@ -272,7 +272,7 @@
             EmailConstLabel.AutoSize = true;
             EmailConstLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             EmailConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            EmailConstLabel.Location = new Point(34, 202);
+            EmailConstLabel.Location = new Point(23, 202);
             EmailConstLabel.Name = "EmailConstLabel";
             EmailConstLabel.Size = new Size(55, 20);
             EmailConstLabel.TabIndex = 4;
@@ -283,7 +283,7 @@
             GenderConstLabel.AutoSize = true;
             GenderConstLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             GenderConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            GenderConstLabel.Location = new Point(31, 154);
+            GenderConstLabel.Location = new Point(20, 154);
             GenderConstLabel.Name = "GenderConstLabel";
             GenderConstLabel.Size = new Size(68, 20);
             GenderConstLabel.TabIndex = 3;
@@ -294,7 +294,7 @@
             NationalNoConstLabel.AutoSize = true;
             NationalNoConstLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             NationalNoConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            NationalNoConstLabel.Location = new Point(31, 106);
+            NationalNoConstLabel.Location = new Point(20, 106);
             NationalNoConstLabel.Name = "NationalNoConstLabel";
             NationalNoConstLabel.Size = new Size(102, 20);
             NationalNoConstLabel.TabIndex = 2;
@@ -305,7 +305,7 @@
             NameConstLabel.AutoSize = true;
             NameConstLabel.Font = new Font("Segoe UI", 11.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             NameConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            NameConstLabel.Location = new Point(34, 58);
+            NameConstLabel.Location = new Point(23, 58);
             NameConstLabel.Name = "NameConstLabel";
             NameConstLabel.Size = new Size(59, 20);
             NameConstLabel.TabIndex = 1;
@@ -330,7 +330,7 @@
             Controls.Add(PersonDetailsGroupBox);
             Controls.Add(personDetailsLabel);
             Name = "ShowPersonUC";
-            Size = new Size(709, 370);
+            Size = new Size(766, 370);
             Load += ShowPersonUC_Load;
             PersonDetailsGroupBox.ResumeLayout(false);
             PersonDetailsGroupBox.PerformLayout();

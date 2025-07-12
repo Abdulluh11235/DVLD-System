@@ -8,8 +8,7 @@ using System.Threading.Tasks;
 
 namespace Domain_Layer.Models.Country;
 
-[DisplayColumn("Name")]
-public class CountryModel : ICountryModel
+public class CountryModel 
 {
     [Range(1, int.MaxValue, ErrorMessage = "CountryID cannot be less than zero.")]
     public int Id { get; set; }

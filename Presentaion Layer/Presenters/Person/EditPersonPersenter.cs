@@ -24,11 +24,11 @@ namespace Presentaion_Layer.Presenters.Person
             _addEditPersonView = form;
             SetUp();
         }
-        void SetUp()
+        async void SetUp()
         {
             _addEditPersonView.PersonSavedInDB += editPerson;
             BindingSource bindingSource = new BindingSource();
-            bindingSource.DataSource = _countryServices.GetAllCountries();
+            bindingSource.DataSource = await _countryServices.GetAllCountries();
             _addEditPersonView.CountriesSource = bindingSource;
             _addEditPersonView.FormText = "Edit Person";
             _addEditPersonView.DisplayedMemCountryList = "Name";
@@ -36,7 +36,7 @@ namespace Presentaion_Layer.Presenters.Person
         }
 
 
-        private bool editPerson(IPersonModel person)
+        private bool editPerson(PersonModel person)
         {
             _addEditPersonView.PersonModel = person;
             return _personServices.UpdatePerson(person);

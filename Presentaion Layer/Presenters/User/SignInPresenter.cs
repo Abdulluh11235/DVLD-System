@@ -7,39 +7,40 @@ using System.Threading.Tasks;
 
 namespace Presentaion_Layer.Presenters.User
 {
-    internal class SignInPresenter
+    internal class SignInPresenter : ISignInPresenter
     {
         private readonly ISignInView _signInView;
         private readonly IMainPresenter _mainPresenter;
         private readonly IUserServices _userServices;
 
-        public SignInPresenter(ISignInView signInView,IMainPresenter mainPresenter,
-            IUserServices userServices) {
+        public SignInPresenter(ISignInView signInView, IMainPresenter mainPresenter,
+            IUserServices userServices)
+        {
             _signInView = signInView;
             _mainPresenter = mainPresenter;
             _userServices = userServices;
-        }
-        private void SetUp()
-        {
             _signInView.SignInSucceeded += _signInView_SignInSucceeded;
             _signInView.CheckCredentials += _signInView_CheckCredentials;
         }
-
-        private bool _signInView_CheckCredentials((string username, string password) cred )
+        private void SetUp()
         {
-            return  _userServices.SignIn(cred);
+        }
+
+        private bool _signInView_CheckCredentials((string username, string password) cred)
+        {
+            return _userServices.SignIn(cred);
         }
 
         private void _signInView_SignInSucceeded(object? sender, EventArgs e)
         {
             //TODO:Check Remember Me & save creds in some place  
-           Form mainF= (Form) _mainPresenter.GetMainView();
+            Form mainF = (Form)_mainPresenter.GetMainView();
             mainF.Show();
         }
 
-        public ISignInView GetView() {
-           SetUp(); 
-          return _signInView;
+        public ISignInView GetView()
+        {
+            return _signInView;
         }
 
 

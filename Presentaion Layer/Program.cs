@@ -19,6 +19,17 @@ using Infrastructure_Layer.DataAccess.Repositories.Specific.User;
 using Service_Layer;
 using Service_Layer.Services.User_Services;
 using Presentaion_Layer.Presenters.User;
+using Presentaion_Layer.Views.Users;
+using Presentaion_Layer.Views.Applications;
+using Service_Layer.Interfaces.Application;
+using Service_Layer.Services.Application_Services;
+using Presentaion_Layer.Presenters.Application;
+using Infrastructure_Layer.DataAccess.Repositories.Specific.Application;
+using Presentaion_Layer.Presenters.Test;
+using Presentaion_Layer.Views.Tests;
+using Service_Layer.Interfaces.Test;
+using Service_Layer.Services.Test_Services;
+using Infrastructure_Layer.DataAccess.Repositories.Specific.Test;
 namespace Presentaion_Layer;
 internal static class Program
 {
@@ -45,7 +56,12 @@ internal static class Program
         // Register Infrastruct 
         services.AddTransient<ICountryRepository>(provider =>
               new CountryRepository(connectionString! ) );
-     
+        services.AddTransient<IApplicationRepository>(provider =>
+        new ApplicationRepository(connectionString!));
+        
+        services.AddTransient<ITestRepository>(provider =>
+         new TestRepository(connectionString!));
+
         services.AddTransient<IPersonRepository>(provider =>
         {
             var countryRepo = provider.GetRequiredService<ICountryRepository>();
@@ -61,35 +77,49 @@ internal static class Program
         // Register Services 
         services.AddTransient<IPersonServices, PersonServices>();
         services.AddTransient<ICountryServices, CountryServices>();
-        services.AddTransient<IModelDataAnnotationCheck, ModelDataAnnotationCheck>();
+        services.AddSingleton<IModelDataAnnotationCheck, ModelDataAnnotationCheck>();
+        services.AddSingleton<IApplicationServices, ApplicationServices>();
         services.AddTransient<IUserServices,UserServices>();
         services.AddSingleton<IPasswordHasher,PasswordHasher>();
+        services.AddTransient<ITestServices, TestServices>();
         // Register Views
         services.AddTransient<IMainView, MainForm>();
         services.AddTransient<IShowListView,ShowListUC>();
+        services.AddTransient<IShowApplicationTypesList, ShowApplicationTypesListPresenter>();
+        services.AddTransient<ITestTypeEditView, TestTypeEditView>();
+        services.AddTransient<IApplicationTypeEditView, ApplicationTypeEditView>();
         services.AddTransient<IAddEditPersonView, AddEditPersonForm>();
+        services.AddTransient<IAddEditUserView, AddEditUserForm>();
+
         // change name for a general container for shows
         services.AddTransient<IShowItemForm, ShowItemForm>();
         
-        services.AddTransient<IShowPersonUC, ShowPersonUC>();
+        services.AddScoped<IShowPersonUC, ShowPersonUC>();
+        services.AddScoped<IShowUserUC, ShowUserUC>();
+        services.AddScoped<ISignInView, SignInForm>();
+
+
         // Register Presenters
         services.AddTransient<IMainPresenter, MainPresenter>();
         services.AddTransient<IShowPeopleListPresenter, ShowPeopleListPresenter>();
+        services.AddTransient<IShowTestTypesListPresenter,ShowTestTypesListPresenter>();
+        services.AddTransient<ITestTypeEditPresenter, TestTypeEditPresenter>();
+        services.AddTransient<IApplicationTypeEditPresenter, ApplicationTypeEditPresenter>();
         services.AddTransient<IShowUsersListPresenter, ShowUsersListPresenter>();
-
-        services.AddTransient<IAddPersonPresenter, AddPersonPresenter>();
+        services.AddTransient<IShowUserUCPresent, ShowUserUCPresent>();
+        services.AddTransient<ISignInPresenter, SignInPresenter>();
+        services.AddScoped<IAddPersonPresenter, AddPersonPresenter>();
         services.AddTransient<IEditPersonPersenter, EditPersonPersenter>();
         services.AddTransient<IShowPersonUCPresenter, ShowPersonUCPresenter>();
+        services.AddTransient<IAddEditUserPresenter, AddEditUserPresenter>();
+
         // change name for a general container for shows
         services.AddTransient<IShowItemPresenter, ShowItemPresenter>();
 
 
 
         var provider = services.BuildServiceProvider();
-
         var presenter = provider.GetRequiredService<IMainPresenter>();
-
-     // Application.Run(new SignInForm() );
-     Application.Run((Form) presenter.GetMainView() );
+      Application.Run((Form) presenter.GetMainView() );
     }
 }

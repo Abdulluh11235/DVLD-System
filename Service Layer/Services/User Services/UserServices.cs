@@ -19,7 +19,7 @@ namespace Service_Layer
             _passwordHasher = passwordHasher;
         }
 
-        public int? AddUser(IUserModel user)
+        public int? AddUser(UserModel user)
         {
             _modelDataAnnotationCheck.ValidateModelDataAnnotations(user);
             user.HashedPassword = _passwordHasher.Hash(user.HashedPassword);
@@ -33,30 +33,29 @@ namespace Service_Layer
             return _userRepository.DeleteUser(id);
         }
 
-        public IEnumerable<IUserModel> GetAllUsers()
+        public async Task<IEnumerable<UserModel>> GetAllUsers()
         {
-            return _userRepository.GetAllUsers();
+            return await _userRepository.GetAllUsers();
         }
 
-        public IEnumerable<IUserModel> GetByIsActive(bool isActive)
+        public async  Task<IEnumerable<UserModel>> GetByIsActive(bool isActive)
         {
-            return _userRepository.GetByIsActive(isActive);
+            return await _userRepository.GetByIsActive(isActive);
         }
 
-        public IEnumerable<IUserModel> GetUsersByUserName(string userName)
+        public async Task<IEnumerable<UserModel>> GetUsersByUserName(string userName)
         {
-            NoEmptyORNull(userName);
-            return _userRepository.GetUsersByUserName(userName);
+            return await _userRepository.GetUsersByUserName(userName);
         }
 
-        public IUserModel? GetUserById(int id)
+        public UserModel? GetUserById(int id)
         {
             if (id <= 0)
                 throw new ArgumentOutOfRangeException(nameof(id), "ID must be greater than zero.");
             return _userRepository.GetUserById(id);
         }
 
-        public bool UpdateUser(IUserModel user)
+        public bool UpdateUser(UserModel user)
         {
             _modelDataAnnotationCheck.ValidateModelDataAnnotations(user);
             return _userRepository.UpdateUser(user);
@@ -68,7 +67,7 @@ namespace Service_Layer
         }
        public bool SignIn((string username,string password) credentials )
        {
-            IUserModel? user = _userRepository.GetUserByUserName(credentials.username);
+            UserModel? user = _userRepository.GetUserByUserName(credentials.username);
             if(user is null)  return false;
          
             return  _passwordHasher.Verify(credentials.password,user.HashedPassword);

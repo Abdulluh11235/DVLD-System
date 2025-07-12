@@ -20,9 +20,9 @@ public class UserRepository : IUserRepository
         _personRepository = personRepository;
     }
 
-    public IEnumerable<IUserModel> GetAllUsers()
+    public async Task<IEnumerable<UserModel>>GetAllUsers()
     {
-        var users = new List<IUserModel>();
+        var users = new List<UserModel>();
 
         try
         {
@@ -31,8 +31,8 @@ public class UserRepository : IUserRepository
             using SqlCommand cmd = new SqlCommand(query, conn);
 
             conn.Open();
-            using SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read()) users.Add(MapUser(reader));
+            using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync()) users.Add(MapUser(reader));
         }
         catch (SqlException sqlEx)
         {
@@ -48,7 +48,7 @@ public class UserRepository : IUserRepository
         return users;
     }
 
-    public IUserModel? GetUserById(int id)
+    public UserModel? GetUserById(int id)
     {
         try
         {
@@ -78,14 +78,14 @@ public class UserRepository : IUserRepository
             throw new DataAccessException("An unexpected error occurred", ex);
         }
     }
-    public IUserModel? GetUserByUserName(string username)
+    public UserModel? GetUserByUserName(string username)
     {
         try
         {
             string query = "SELECT * FROM Users WHERE UserName = @UserName";
             using SqlConnection conn = new SqlConnection(_connectionString);
             using SqlCommand cmd = new SqlCommand(query, conn);
-            cmd.Parameters.AddWithValue("@UserID", username);
+            cmd.Parameters.AddWithValue("@UserName", username);
 
             conn.Open();
             using SqlDataReader reader = cmd.ExecuteReader();
@@ -110,7 +110,7 @@ public class UserRepository : IUserRepository
     }
 
 
-    public int? AddUser(IUserModel user)
+    public int? AddUser(UserModel user)
     {
         if (user == null)
             throw new ArgumentNullException(nameof(user));
@@ -155,7 +155,7 @@ public class UserRepository : IUserRepository
         }
     }
 
-    public bool UpdateUser(IUserModel user)
+    public bool UpdateUser(UserModel user)
     {
         if (user == null)
             throw new ArgumentNullException(nameof(user));
@@ -214,7 +214,7 @@ public class UserRepository : IUserRepository
         }
     }
 
-    private IUserModel MapUser(SqlDataReader reader)
+    private UserModel MapUser(SqlDataReader reader)
     {
         return new UserModel
         {
@@ -226,7 +226,7 @@ public class UserRepository : IUserRepository
         };
     }
 
-    private SqlParameter[] GetAddParameters(IUserModel user) => new SqlParameter[]
+    private SqlParameter[] GetAddParameters(UserModel user) => new SqlParameter[]
     {
         new("@UserName", user.UserName),
         new("@PersonID", user.PersonId),
@@ -234,16 +234,16 @@ public class UserRepository : IUserRepository
         new("@IsActive", user.Active)
     };
 
-    private SqlParameter[] GetUpdateParameters(IUserModel user)
+    private SqlParameter[] GetUpdateParameters(UserModel user)
     {
         var baseParams = GetAddParameters(user).ToList();
         baseParams.Insert(0, new SqlParameter("@UserID", user.UserID));
         return baseParams.ToArray();
     }
 
-    public IEnumerable<IUserModel> GetUsersByUserName(string userName)
+    public async Task<IEnumerable<UserModel>> GetUsersByUserName(string userName)
     {
-        var users = new List<IUserModel>();
+        var users = new List<UserModel>();
 
         try
         {
@@ -257,8 +257,8 @@ public class UserRepository : IUserRepository
 
             conn.Open();
 
-            using SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
+            using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
             {
                 users.Add(MapUser(reader));
             }
@@ -276,9 +276,9 @@ public class UserRepository : IUserRepository
 
         return users;
     }
-    public IEnumerable<IUserModel> GetByIsActive(bool isActive)
+    public async Task<IEnumerable<UserModel>> GetByIsActive(bool isActive)
     {
-        var users = new List<IUserModel>();
+        var users = new List<UserModel>();
         try
         {
             string query = "SELECT * FROM Users WHERE IsActive = @IsActive";
@@ -286,8 +286,8 @@ public class UserRepository : IUserRepository
             using SqlCommand cmd = new SqlCommand(query, conn);
             cmd.Parameters.AddWithValue("@IsActive", isActive);
             conn.Open();
-            using SqlDataReader reader = cmd.ExecuteReader();
-            while (reader.Read()) users.Add(MapUser(reader));
+            using SqlDataReader reader = await cmd.ExecuteReaderAsync();
+            while (await reader.ReadAsync()) users.Add(MapUser(reader));
         }
         catch (SqlException sqlEx)
         {
@@ -295,31 +295,5 @@ public class UserRepository : IUserRepository
             throw new DataAccessException("Error retrieving users by active status", sqlEx);
         }
         return users;
-    }
-    public bool SignIn( (string username, string password) credentials )
-    {
-        string query = "Select Password FROM Users WHERE UserName = @UserName";
-        using SqlConnection con = new SqlConnection(_connectionString); 
-        using SqlCommand cmd = new SqlCommand(query, con);
-
-        try
-        {
-            con.Open();
-            cmd.Parameters.AddWithValue("@UserName", credentials.username);
-           
-            string storedPassword = Convert.ToString(cmd.ExecuteScalar())!;
-            return storedPassword==credentials.password;
-        }
-        catch (SqlException sqlEx)
-        {
-            Debug.WriteLine($"SQL Error in Sign In : {sqlEx.Message}");
-            throw new DataAccessException("Error Signing user in u", sqlEx);
-        }
-        catch (Exception ex)
-        {
-            Debug.WriteLine($"Error in SignIn: {ex.Message}");
-            throw new DataAccessException("An unexpected error occurred", ex);
-        }
-
     }
 }

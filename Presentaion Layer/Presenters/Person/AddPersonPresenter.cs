@@ -20,19 +20,21 @@ public class AddPersonPresenter : IAddPersonPresenter
         _addEditPersonView = form;      
         SetUp();
     }
-    void SetUp()
+    async void SetUp()
     {
         _addEditPersonView.PersonSavedInDB += AddPerson;
+        
         BindingSource bindingSource = new BindingSource();
-        bindingSource.DataSource = _countryServices.GetAllCountries();
+        bindingSource.DataSource = await _countryServices.GetAllCountries();
         _addEditPersonView.CountriesSource=bindingSource;
+
         _addEditPersonView.FormText = "Add Person";
         _addEditPersonView.DisplayedMemCountryList = "Name";
         _addEditPersonView.ValueMemCountryList="Id";
     }
 
 
-    private bool AddPerson(IPersonModel person)
+    private bool AddPerson(PersonModel person)
     {
       return _personServices.AddPerson(person).HasValue;
     }

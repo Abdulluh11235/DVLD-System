@@ -2,6 +2,6 @@
 {
     public interface IModelDataAnnotationCheck
     {
-        void ValidateModelDataAnnotations<TModel>(TModel domainModel);
+        void  ValidateModelDataAnnotations<TModel>(TModel domainModel);
     }
 }

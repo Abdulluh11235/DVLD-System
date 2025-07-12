@@ -25,7 +25,8 @@ public abstract class BaseShowListPresenter<TModel, TServices>
         Setup();
     }
 
-    protected abstract void InitializeSearchHandlers();
+    
+    protected virtual void InitializeSearchHandlers() { /* a hook function*/ }
 
     protected virtual void Setup()
     {

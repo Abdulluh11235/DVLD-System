@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Country
 {
-    public class CountryRepository : ICountryRepository
+    public class CountryRepository :ICountryRepository
     {
         private string _connectionString { get; set; }
 
@@ -21,7 +21,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Country
         {
             _connectionString = ConnectionString;
         }
-        public ICountryModel? GetCountryById(int id)
+        public CountryModel? GetCountryById(int id)
         {
             string query = "SELECT * FROM Countries WHERE CountryID=@CountryID";
             using SqlConnection conn = new SqlConnection(_connectionString);
@@ -47,9 +47,9 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Country
             }
 
         }
-        public IEnumerable<ICountryModel> GetAllCountries()
+        public  async Task< IEnumerable<CountryModel> >GetAllCountries()
         {
-            var countries = new List<ICountryModel>();
+            var countries = new List<CountryModel>();
 
             try
             {
@@ -57,10 +57,10 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Country
                 using SqlConnection conn = new SqlConnection(_connectionString);
                 using SqlCommand cmd = new SqlCommand(query, conn);
 
-                conn.Open();
-                using SqlDataReader reader = cmd.ExecuteReader();
+                await conn.OpenAsync();
+                using SqlDataReader reader = await cmd.ExecuteReaderAsync();
 
-                while (reader.Read())
+                while (await reader.ReadAsync())
                 {
                     countries.Add(MapCountry(reader));
                 }
@@ -79,7 +79,7 @@ namespace Infrastructure_Layer.DataAccess.Repositories.Specific.Country
             return countries;
         }
 
-        private ICountryModel MapCountry(SqlDataReader reader)
+        private CountryModel MapCountry(SqlDataReader reader)
         {
             return new CountryModel
             {

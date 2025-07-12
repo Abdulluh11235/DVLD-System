@@ -26,7 +26,7 @@ public partial class SignInForm : Form, ISignInView
         if (CheckCredentials((UserNameTextBox.Text, PasswordMaskedTextBox.Text)))
         {
             SignInSucceeded(this, EventArgs.Empty);
-            Close();
+            this.Hide();
         }
         else
             MessageBox.Show("Invalid Username /Password");

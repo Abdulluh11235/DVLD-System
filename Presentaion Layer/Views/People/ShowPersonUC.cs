@@ -13,24 +13,25 @@ namespace Presentaion_Layer.Views.People;
 
 public partial class ShowPersonUC : UserControl, IShowPersonUC
 {
-    public event EventHandler showEdit = delegate { };
+    public event EventHandler? showEdit ;
 
-    public IPersonModel PersonModel { set; get; }
+    public PersonModel? PersonModel { get; set; }
 
     public ShowPersonUC()
     {
         InitializeComponent();
     }
-    void assign_labels()
+    public void update()
     {
-        PersonIDLabel.Text = PersonModel.PersonID.ToString();
+        if(PersonModel == null) { throw new ArgumentNullException(); }
 
+        PersonIDLabel.Text = PersonModel.PersonID.ToString();
         NameLabel.Text = PersonModel.FirstName + " " +
             PersonModel.SecondName + " " + PersonModel.ThirdName + " " +
             PersonModel.LastName;
 
         NationalNoLabel.Text = PersonModel.NationalNo;
-        GenderLabel.Text = (PersonModel.Gender) ? "Male" : "Female";
+        GenderLabel.Text = (PersonModel.Gender) ? "Female" : "Male";
         EmailLabel.Text = PersonModel.Email;
         AddressLabel.Text = PersonModel.Address;
         DateOfBirthLabel.Text = PersonModel.DateOfBirth.ToString("MM/dd/yyyy");
@@ -41,10 +42,10 @@ public partial class ShowPersonUC : UserControl, IShowPersonUC
     }
     private void ShowPersonUC_Load(object sender, EventArgs e)
     {
-        assign_labels();
+        update();
     }
     private void editPersonLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
     {
-        showEdit.Invoke(this, e);
+        showEdit?.Invoke(this, e);
     }
 }

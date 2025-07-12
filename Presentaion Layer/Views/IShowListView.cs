@@ -16,7 +16,11 @@ namespace Presentaion_Layer.Views
 
 
 
-
+        bool BasicEditOnly
+        {
+            get;
+            set;
+        }
         int SelectedIndex { get; }
         Image? ImageForAddBtn { get; set; }
         IList<string>? SearchBy { get; set; }
@@ -27,7 +31,6 @@ namespace Presentaion_Layer.Views
         public int SelectedID { get; }
 
         void SetListBindingSource(BindingSource bs);
-        void HideColumn(string ColName);
 
     }
 

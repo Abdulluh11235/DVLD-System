@@ -8,9 +8,9 @@ public interface IAddEditPersonView
     BindingSource CountriesSource { set; }
     string DisplayedMemCountryList { get; set; }
     string FormText { get; set; }
-    IPersonModel? PersonModel { get; set; }
+    PersonModel? PersonModel { get; set; }
     string ValueMemCountryList { get; set; }
 
-    public event EventHandler<IPersonModel?> DataBack;
-    event Predicate<IPersonModel> PersonSavedInDB;
+    public event EventHandler<PersonModel?> DataBack;
+    event Predicate<PersonModel> PersonSavedInDB;
 }
