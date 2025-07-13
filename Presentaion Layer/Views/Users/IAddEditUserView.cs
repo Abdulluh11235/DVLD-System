@@ -8,17 +8,13 @@ namespace Presentaion_Layer.Views.Users
 {
     public interface IAddEditUserView
     {
-        event EventHandler<SearchByIdEventArgs>? SearchForPersonID;
-        event EventHandler<SearchByNationalNoEventArgs>? SearchForPersonNationalNo;
         public event Func<UserModel, int?>? addUserInDB;
         public event Predicate<UserModel?>? updateUserInDB;
 
         public event EventHandler<UserModel?>? DataBack;
-
+        public void addPersonFilterCard(IFilterPersonUC filterPersonUC);
+        public UserModel? UserModel { set; get; }
         public PersonModel? PersonModel { set; get; }
 
-        public UserModel? UserModel { set; get; }
-
-        void AddPersonCard(IShowPersonUC card);
     }
 }

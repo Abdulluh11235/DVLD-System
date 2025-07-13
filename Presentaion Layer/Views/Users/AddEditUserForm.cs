@@ -7,6 +7,8 @@ using System.CodeDom;
 using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
 using Presentaion_Layer.Presenters.Person;
+using System.Net.NetworkInformation;
+using System.Text;
 
 namespace Presentaion_Layer.Views.Users
 {
@@ -20,7 +22,6 @@ namespace Presentaion_Layer.Views.Users
 
         public event EventHandler<UserModel?>? DataBack;
 
-        private enum FindBy { PersonId, NationalNo }
 
         UserModel? _userModel;
         Mode mode = Mode.Add;
@@ -46,18 +47,14 @@ namespace Presentaion_Layer.Views.Users
 
         void clear()
         {
-            askForPersonControlsVisibility(true);
-            
-            SearchTextBox.Clear();
             UserNameTextBox.Clear();  
             maskedTextBox1.Clear();
             maskedTextBox2.Clear();
-
             ActiveCheckBox.Checked = false;
-            PersonInfoUserInfotabControl.SelectedIndex = 0;
+    //     if(PersonModel is  null) 
+      //      hasPerson = false;
 
-            nextButton.Enabled = false;
-            saveButton.Enabled = false;
+            PersonInfoUserInfotabControl.SelectedIndex = 0;
         }     
 
         public PersonModel? PersonModel { get; set; }
@@ -66,88 +63,22 @@ namespace Presentaion_Layer.Views.Users
 
         public AddEditUserForm()
         {
-            InitializeComponent();
-
-            FindByComboBox.SelectedIndex = 0;
-      
+            InitializeComponent();      
         }
 
         private void AddUserForm_Load(object sender, EventArgs e)
         {
 
         }
-
-        private void SearchForPersonButton_Click(object sender, EventArgs e)
+        IFilterPersonUC ifilter;
+        public void addPersonFilterCard(IFilterPersonUC filterPersonUC)
         {
-            if (string.IsNullOrWhiteSpace(SearchTextBox.Text))
-            {
-                MessageBox.Show("Please enter a valid search value.", "Invalid Input",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            PersonModel? person = null;
-            try
-            {
-                switch ((FindBy)FindByComboBox.SelectedIndex)
-                {
-                    case FindBy.PersonId:
-                        int personId = int.Parse(SearchTextBox.Text);
-                        var idArgs = new SearchByIdEventArgs(personId);
-                        SearchForPersonID?.Invoke(this, idArgs);
-                        person = idArgs.Person;
-                        break;
-
-                    case FindBy.NationalNo:
-                        var nationalNoArgs = new SearchByNationalNoEventArgs(SearchTextBox.Text);
-                        SearchForPersonNationalNo?.Invoke(this, nationalNoArgs);
-                        person = nationalNoArgs.Person;
-                        break;
-
-                    default:
-                        MessageBox.Show("Invalid search type selected.", "Error",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                }
-
-                if (person == null)
-                {
-                    MessageBox.Show("No person found with the provided information.", "Not Found",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"An error occurred: {ex.Message}", "Error",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            ifilter = filterPersonUC;
+            Control c = (Control)filterPersonUC;
+            c.Dock = DockStyle.Fill;
+            personalInfo.Controls.Add(c);
         }
 
-        void askForPersonControlsVisibility(bool visible)
-        {
-            noPersonConstLabel.Visible = visible;
-            RequirePersonPictureBox.Visible=visible;
-            
-            if(visible && cardControl is not null)
-                cardControl.Visible=false;
-        }
-        Control? cardControl;
-        public void AddPersonCard(IShowPersonUC card)
-        {
-
-            askForPersonControlsVisibility(false);
-
-             cardControl = (Control)card;
-            cardControl.Visible = true;
-
-            cardControl.Dock = DockStyle.Bottom;
-            PersonInfoUserInfotabControl.TabPages[0].Controls.Add(cardControl);
-
-            nextButton.Enabled = true;
-            saveButton.Enabled = true;
-        }
 
 
         private void closeButton_Click(object sender, EventArgs e)
@@ -169,10 +100,12 @@ namespace Presentaion_Layer.Views.Users
         {
             PersonInfoUserInfotabControl.SelectedIndex = 0;
         }
-
         private void PersonInfoUserInfotabControl_Selecting(object sender, TabControlCancelEventArgs e)
         {
-            if (!nextButton.Enabled) e.Cancel = true;
+            if (ifilter.PersonModel is null) { e.Cancel = true;
+                messageNoPerson();
+            }
+
         }
 
 
@@ -215,20 +148,33 @@ namespace Presentaion_Layer.Views.Users
         {
             errorPassMatch();
         }
-        private void dontAllowEmpty()
+
+        void messageNoPerson()
         {
+             MessageBox.Show("Must Select A Person To Porceed.");
+
+        }
+        private bool dontAllowEmpty()
+        {
+            if (ifilter.PersonModel is null)
+            { messageNoPerson();  return false; }
+            else {
+            PersonModel=ifilter.PersonModel;    
+            }
+               
+           
             foreach (Control c in PersonInfoUserInfotabControl.TabPages[1].Controls)
             {
                 if ((c is TextBox || c is MaskedTextBox) && string.IsNullOrEmpty(c.Text))
                     errorProvider.SetError(c, "Can\'t Leave it empty");
             }
+            if (errorProvider.HasErrors)
+            { MessageBox.Show("Please correct the highlighted errors before saving."); return false; }
+            return true;
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
-            dontAllowEmpty();
-            if (errorProvider.HasErrors)
-                MessageBox.Show("Please correct the highlighted errors before saving.");
-            else
+           if(dontAllowEmpty())
             {
                 Save();
                 Close();
@@ -308,10 +254,6 @@ namespace Presentaion_Layer.Views.Users
             };
         }
 
-        private void AddPersonButton_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Coming-Soon Feature");
-        }
     }
 
 }

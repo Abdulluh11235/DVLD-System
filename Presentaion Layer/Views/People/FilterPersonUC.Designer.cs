@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            nextButton = new Button();
             RequirePersonPictureBox = new PictureBox();
             noPersonConstLabel = new Label();
             FilterGroupBox = new GroupBox();
@@ -40,20 +39,6 @@
             ((System.ComponentModel.ISupportInitialize)RequirePersonPictureBox).BeginInit();
             FilterGroupBox.SuspendLayout();
             SuspendLayout();
-            // 
-            // nextButton
-            // 
-            nextButton.BackColor = Color.FromArgb(60, 60, 60);
-            nextButton.FlatAppearance.BorderSize = 0;
-            nextButton.FlatStyle = FlatStyle.Flat;
-            nextButton.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            nextButton.ForeColor = Color.White;
-            nextButton.Location = new Point(743, 374);
-            nextButton.Name = "nextButton";
-            nextButton.Size = new Size(84, 30);
-            nextButton.TabIndex = 11;
-            nextButton.Text = "Next";
-            nextButton.UseVisualStyleBackColor = false;
             // 
             // RequirePersonPictureBox
             // 
@@ -154,12 +139,12 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(33, 33, 33);
-            Controls.Add(nextButton);
             Controls.Add(RequirePersonPictureBox);
             Controls.Add(noPersonConstLabel);
             Controls.Add(FilterGroupBox);
             Name = "FilterPersonUC";
             Size = new Size(851, 433);
+            Load += FilterPersonUC_Load;
             ((System.ComponentModel.ISupportInitialize)RequirePersonPictureBox).EndInit();
             FilterGroupBox.ResumeLayout(false);
             FilterGroupBox.PerformLayout();
@@ -168,8 +153,6 @@
         }
 
         #endregion
-
-        private Button nextButton;
         private PictureBox RequirePersonPictureBox;
         private Label noPersonConstLabel;
         private GroupBox FilterGroupBox;

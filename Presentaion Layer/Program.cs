@@ -84,6 +84,7 @@ internal static class Program
         services.AddTransient<ITestServices, TestServices>();
         // Register Views
         services.AddTransient<IMainView, MainForm>();
+        services.AddTransient<IFilterPersonUC, FilterPersonUC>();
         services.AddTransient<IShowListView,ShowListUC>();
         services.AddTransient<IShowApplicationTypesList, ShowApplicationTypesListPresenter>();
         services.AddTransient<ITestTypeEditView, TestTypeEditView>();
@@ -101,6 +102,7 @@ internal static class Program
 
         // Register Presenters
         services.AddTransient<IMainPresenter, MainPresenter>();
+        services.AddTransient<IfilterPersonUCPresenter, filterPersonUCPresenter>();
         services.AddTransient<IShowPeopleListPresenter, ShowPeopleListPresenter>();
         services.AddTransient<IShowTestTypesListPresenter,ShowTestTypesListPresenter>();
         services.AddTransient<ITestTypeEditPresenter, TestTypeEditPresenter>();

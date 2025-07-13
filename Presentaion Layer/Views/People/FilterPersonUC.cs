@@ -13,9 +13,22 @@ using System.Windows.Forms;
 
 namespace Presentaion_Layer.Presenters.Person
 {
-    public partial class FilterPersonUC : UserControl, IFilterPersonUCView
+    public partial class FilterPersonUC : UserControl, IFilterPersonUC
     {
-        public PersonModel? PersonModel { get; set; }
+        PersonModel _personmodel;
+        public PersonModel? PersonModel
+        {
+            get => _personmodel;
+            set
+            {
+                if (value is not null) { _personmodel = value; }
+                else {   askForPersonControlsVisibility(true); }
+
+                SearchTextBox.Clear();
+            }
+        }
+
+
         public event EventHandler<SearchByIdEventArgs>? SearchForPersonID;
         public event EventHandler<SearchByNationalNoEventArgs>? SearchForPersonNationalNo;
         private enum FindBy { PersonId, NationalNo }
@@ -27,30 +40,6 @@ namespace Presentaion_Layer.Presenters.Person
             FindByComboBox.SelectedIndex = 0;
         }
 
-
-
-        void askForPersonControlsVisibility(bool visible)
-        {
-            noPersonConstLabel.Visible = visible;
-            RequirePersonPictureBox.Visible = visible;
-
-            if (visible && cardControl is not null)
-                cardControl.Visible = false;
-        }
-        Control? cardControl;
-        public void AddPersonCard(IShowPersonUC card)
-        {
-
-            askForPersonControlsVisibility(false);
-
-            cardControl = (Control)card;
-            cardControl.Visible = true;
-
-            cardControl.Dock = DockStyle.Bottom;
-            Controls.Add(cardControl);
-
-            nextButton.Enabled = true;
-        }
 
         private void SearchForPersonButton_Click(object sender, EventArgs e)
         {
@@ -91,7 +80,7 @@ namespace Presentaion_Layer.Presenters.Person
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-
+              _personmodel = person;
             }
             catch (Exception ex)
             {
@@ -99,6 +88,33 @@ namespace Presentaion_Layer.Presenters.Person
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+        Control? cardControl;
+        void askForPersonControlsVisibility(bool visible)
+        {
+            noPersonConstLabel.Visible = visible;
+            RequirePersonPictureBox.Visible = visible;
+
+            if (visible && cardControl is not null)
+                cardControl.Visible = false;
+        }
+        public void AddPersonCard(IShowPersonUC card)
+        {
+
+            askForPersonControlsVisibility(false);
+
+            cardControl = (Control)card;
+            cardControl.Visible = true;
+
+            cardControl.Dock = DockStyle.Bottom;
+            Controls.Add(cardControl);
+
+        }
+
+        private void FilterPersonUC_Load(object sender, EventArgs e)
+        {
+         
+        }
+  
     }
     public class SearchByNationalNoEventArgs : EventArgs
         {
@@ -110,7 +126,7 @@ namespace Presentaion_Layer.Presenters.Person
                 NationalNo = nationalNo;
             }
         }
-        public class SearchByIdEventArgs : EventArgs
+    public class SearchByIdEventArgs : EventArgs
         {
 
             public int PersonId { get; }

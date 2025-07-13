@@ -20,6 +20,7 @@ namespace Presentaion_Layer.Presenters.User
         private readonly IAddEditUserPresenter _addEditUserPresenter;
         private readonly IShowPersonUCPresenter _showPersonUCPresenter;
         private readonly IShowUserUCPresent _showUserUCPresenter;
+        private readonly IfilterPersonUCPresenter _filterPersonUCPresenter;
 
 
 
@@ -27,12 +28,13 @@ namespace Presentaion_Layer.Presenters.User
             IShowListView showListView,
             IUserServices userServices,
             IShowItemPresenter showUserPresenter,
-            IAddEditUserPresenter addEditUserPresenter,
+            IAddEditUserPresenter addEditUserPresenter,IfilterPersonUCPresenter filterPersonUCPresenter,
             IShowPersonUCPresenter showPersonUCPresenter, IShowUserUCPresent showUserUCPresent)
             : base(showListView, userServices)
         {
             _showUserPresenter = showUserPresenter;
             _showUserUCPresenter= showUserUCPresent;
+            _filterPersonUCPresenter= filterPersonUCPresenter;
             _showPersonUCPresenter = showPersonUCPresenter; 
             _addEditUserPresenter = addEditUserPresenter;
         }
@@ -56,7 +58,7 @@ namespace Presentaion_Layer.Presenters.User
             _showListView.Search += _showListView_Search;
             _showListView.AddToList += _showListView_AddToList;
             _showListView.RemoveFromList += _showListView_RemoveFromList;
-            _showListView.EditItemInList += _showListView_EditItemInList;
+           _showListView.EditItemInList += _showListView_EditItemInList;
             _showListView.ShowDetailsForItem += _showListView_ShowDetailsForItem;
         }
 
@@ -69,10 +71,13 @@ namespace Presentaion_Layer.Presenters.User
             if (user == null) throw new ArgumentNullException("user");
             _editUserView.UserModel= user;
             _editUserView.PersonModel = user.Person;
-            _showPersonUCPresenter.PersonId = user.PersonId;    
-            _editUserView.AddPersonCard(_showPersonUCPresenter.GetView());
+            _showPersonUCPresenter.PersonId=user.PersonId;
+           var  filterCard = _filterPersonUCPresenter.GetView();
+            filterCard.AddPersonCard(_showPersonUCPresenter.GetView());
 
-            lastSubscribed=Mode.Edit;
+            filterCard.PersonModel = user.Person;
+            _editUserView.addPersonFilterCard(filterCard);
+
 
             if (notSubscribedEdit)
             {
@@ -122,9 +127,11 @@ namespace Presentaion_Layer.Presenters.User
         private void _showListView_AddToList(object? sender, EventArgs e)
         {
             var addForm = _addEditUserPresenter.GetView();
-
             addForm.UserModel = null; // add mode & controls vis
             addForm.PersonModel =null;
+            var filterCard = _filterPersonUCPresenter.GetView();
+            filterCard.PersonModel=null;
+            addForm.addPersonFilterCard(filterCard);
            
 
             if (notSubscribedAdd)
@@ -160,7 +167,7 @@ namespace Presentaion_Layer.Presenters.User
 
             var showUserForm = _showUserPresenter.ShowView();
             
-          _showPersonUCPresenter.PersonId=showUserControl.User!.Person.PersonID;
+           _showPersonUCPresenter.PersonId=showUserControl.User!.Person.PersonID;
             var showPersonControl = _showPersonUCPresenter.GetView();
 
 

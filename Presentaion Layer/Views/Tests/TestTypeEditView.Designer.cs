@@ -123,10 +123,10 @@
             // 
             // testTypeDescriptionTextbox
             // 
-            testTypeDescriptionTextbox.Location = new Point(251, 218);
+            testTypeDescriptionTextbox.Location = new Point(168, 218);
             testTypeDescriptionTextbox.Multiline = true;
             testTypeDescriptionTextbox.Name = "testTypeDescriptionTextbox";
-            testTypeDescriptionTextbox.Size = new Size(225, 47);
+            testTypeDescriptionTextbox.Size = new Size(319, 57);
             testTypeDescriptionTextbox.TabIndex = 44;
             // 
             // testTypeDescriptionConstLabel
@@ -134,7 +134,7 @@
             testTypeDescriptionConstLabel.AutoSize = true;
             testTypeDescriptionConstLabel.Font = new Font("Segoe UI", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             testTypeDescriptionConstLabel.ForeColor = Color.FromArgb(244, 244, 244);
-            testTypeDescriptionConstLabel.Location = new Point(83, 230);
+            testTypeDescriptionConstLabel.Location = new Point(13, 230);
             testTypeDescriptionConstLabel.Name = "testTypeDescriptionConstLabel";
             testTypeDescriptionConstLabel.Size = new Size(149, 17);
             testTypeDescriptionConstLabel.TabIndex = 43;
